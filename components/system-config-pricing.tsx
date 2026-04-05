@@ -204,7 +204,7 @@ export function SystemConfigPricing() {
 
         {/* Terminal prompt */}
         <div className="mt-8 text-muted-foreground text-sm">
-          <span className="text-primary">phantom@config:~$</span> echo
+          <span className="text-primary">doblex@config:~$</span> echo
           &quot;{t("pricing.custom")}&quot;
           <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>

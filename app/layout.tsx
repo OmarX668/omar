@@ -15,7 +15,7 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: 'PHANTOM.DEV // نظام سري',
+  title: 'DOBLEX.DEV // نظام سري',
   description: 'خدمات برمجة متقدمة. بوتات ديسكورد، مواقع، تطوير مخصص. تم منح الوصول.',
   generator: 'v0.app',
   icons: {

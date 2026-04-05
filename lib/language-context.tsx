@@ -14,7 +14,7 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   ar: {
     // Boot sequence
-    "boot.kernel": "نظام PHANTOM.DEV الإصدار 4.2.0",
+    "boot.kernel": "نظام DOBLEX.DEV الإصدار 4.2.0",
     "boot.init": "جارٍ تهيئة الاتصال الآمن...",
     "boot.crypto": "تحميل وحدات التشفير.......... [تم]",
     "boot.tunnel": "إنشاء نفق مشفر.......... [تم]",
@@ -34,8 +34,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.online": "متصل",
 
     // Hero
-    "hero.init": "جارٍ التهيئة... تم منح الوصول. مرحباً بك في PHANTOM.DEV",
-    "hero.prompt": "root@phantom:~# ",
+    "hero.init": "جارٍ التهيئة... تم منح الوصول. مرحباً بك في DOBLEX.DEV",
+    "hero.prompt": "root@doblex:~# ",
     "hero.subtitle1": "خدمات برمجة متقدمة لسيرفرات ديسكورد",
     "hero.subtitle2": "بوتات مخصصة • تطوير مواقع • حلول متخصصة",
     "hero.projects": "مشروع",
@@ -47,7 +47,7 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.scroll": "اسحب للأسفل",
 
     // Services
-    "services.prompt": "phantom@services:~$ ls -la",
+    "services.prompt": "doblex@services:~$ ls -la",
     "services.title": "دليل الخدمات",
     "services.total": "المجموع 27.6K",
     "services.permissions": "الصلاحيات",
@@ -96,7 +96,7 @@ const translations: Record<Language, Record<string, string>> = {
     "service.maint.f4": "دعم ذو أولوية",
 
     // Projects
-    "projects.prompt": "phantom@classified:~$ cat /var/projects/*.log",
+    "projects.prompt": "doblex@classified:~$ cat /var/projects/*.log",
     "projects.title": "ملفات سرية",
     "projects.warning": "مرر الماوس لفك تشفير المعلومات الحساسة",
     "projects.all": "// جميع الملفات",
@@ -132,16 +132,16 @@ const translations: Record<Language, Record<string, string>> = {
     "project.5.client": "منظمة رياضات إلكترونية",
     "project.5.desc": "منصة إدارة بطولات مع إنشاء قرعات، نتائج مباشرة، وتكامل ديسكورد للإعلانات.",
 
-    "project.6.codename": "نواة الشبح",
+    "project.6.codename": "نواة DOBLEX",
     "project.6.client": "[مطلوب تصريح المستوى 5]",
     "project.6.desc": "بنية تحتية داخلية للسيرفر مع أنابيب نشر آلية، لوحات مراقبة، وأنظمة استجابة للحوادث.",
 
     // Pricing
-    "pricing.prompt": "phantom@config:~$ nano /etc/phantom/pricing.conf",
+    "pricing.prompt": "doblex@config:~$ nano /etc/doblex/pricing.conf",
     "pricing.title": "تكوين النظام",
-    "pricing.file": "/etc/phantom/pricing.conf",
+    "pricing.file": "/etc/doblex/pricing.conf",
     "pricing.modified": "[معدّل]",
-    "pricing.comment1": "# تكوين تسعير PHANTOM.DEV",
+    "pricing.comment1": "# تكوين تسعير DOBLEX.DEV",
     "pricing.comment2": "# آخر تحديث:",
     "pricing.comment3": "# جميع الأسعار بكريدت ديسكورد",
     "pricing.features": "# ميزات",
@@ -209,10 +209,10 @@ const translations: Record<Language, Record<string, string>> = {
     "config.free": "مجاني",
 
     // Contact
-    "contact.prompt": "phantom@connect:~$ ./initiate_contact.sh",
+    "contact.prompt": "doblex@connect:~$ ./initiate_contact.sh",
     "contact.title": "إنشاء الاتصال",
     "contact.header1": "╔══════════════════════════════════════════════════════╗",
-    "contact.header2": "║ قناة الاتصال الآمنة لـ PHANTOM.DEV                   ║",
+    "contact.header2": "║ قناة الاتصال الآمنة لـ DOBLEX.DEV                   ║",
     "contact.header3": "║ اكتب 'help' للأوامر المتاحة                          ║",
     "contact.header4": "╚══════════════════════════════════════════════════════╝",
     "contact.placeholder": "اكتب أمراً...",
@@ -231,7 +231,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Footer
     "footer.system": "[النظام]",
-    "footer.rights": "PHANTOM.DEV © 2026 — جميع الحقوق محفوظة",
+    "footer.rights": "DOBLEX.DEV © 2026 — جميع الحقوق محفوظة",
     "footer.session": "الجلسة:",
 
     // Language toggle
@@ -239,7 +239,7 @@ const translations: Record<Language, Record<string, string>> = {
   },
   en: {
     // Boot sequence
-    "boot.kernel": "PHANTOM.DEV KERNEL v4.2.0",
+    "boot.kernel": "DOBLEX.DEV KERNEL v4.2.0",
     "boot.init": "Initializing secure connection...",
     "boot.crypto": "Loading cryptographic modules.......... [OK]",
     "boot.tunnel": "Establishing encrypted tunnel.......... [OK]",
@@ -259,8 +259,8 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.online": "ONLINE",
 
     // Hero
-    "hero.init": "INITIALIZING... ACCESS GRANTED. WELCOME TO PHANTOM.DEV",
-    "hero.prompt": "root@phantom:~# ",
+    "hero.init": "INITIALIZING... ACCESS GRANTED. WELCOME TO DOBLEX.DEV",
+    "hero.prompt": "root@doblex:~# ",
     "hero.subtitle1": "Elite programming services for Discord servers",
     "hero.subtitle2": "Custom bots • Web development • Specialized solutions",
     "hero.projects": "PROJECTS",
@@ -272,7 +272,7 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.scroll": "SCROLL DOWN",
 
     // Services
-    "services.prompt": "phantom@services:~$ ls -la",
+    "services.prompt": "doblex@services:~$ ls -la",
     "services.title": "SERVICE DIRECTORY",
     "services.total": "total 27.6K",
     "services.permissions": "PERMISSIONS",
@@ -321,7 +321,7 @@ const translations: Record<Language, Record<string, string>> = {
     "service.maint.f4": "Priority support",
 
     // Projects
-    "projects.prompt": "phantom@classified:~$ cat /var/projects/*.log",
+    "projects.prompt": "doblex@classified:~$ cat /var/projects/*.log",
     "projects.title": "CLASSIFIED FILES",
     "projects.warning": "Hover to decrypt sensitive information",
     "projects.all": "// ALL FILES",
@@ -357,16 +357,16 @@ const translations: Record<Language, Record<string, string>> = {
     "project.5.client": "E-Sports Organization",
     "project.5.desc": "Tournament management platform with bracket generation, live scoring, and Discord integration for announcements.",
 
-    "project.6.codename": "PHANTOM CORE",
+    "project.6.codename": "DOBLEX CORE",
     "project.6.client": "[LEVEL 5 CLEARANCE REQUIRED]",
     "project.6.desc": "Internal server infrastructure with automated deployment pipelines, monitoring dashboards, and incident response systems.",
 
     // Pricing
-    "pricing.prompt": "phantom@config:~$ nano /etc/phantom/pricing.conf",
+    "pricing.prompt": "doblex@config:~$ nano /etc/doblex/pricing.conf",
     "pricing.title": "SYSTEM CONFIGURATION",
-    "pricing.file": "/etc/phantom/pricing.conf",
+    "pricing.file": "/etc/doblex/pricing.conf",
     "pricing.modified": "[MODIFIED]",
-    "pricing.comment1": "# PHANTOM.DEV PRICING CONFIGURATION",
+    "pricing.comment1": "# DOBLEX.DEV PRICING CONFIGURATION",
     "pricing.comment2": "# Last updated:",
     "pricing.comment3": "# All prices in Discord Credits",
     "pricing.features": "# FEATURES:",
@@ -434,10 +434,10 @@ const translations: Record<Language, Record<string, string>> = {
     "config.free": "FREE",
 
     // Contact
-    "contact.prompt": "phantom@connect:~$ ./initiate_contact.sh",
+    "contact.prompt": "doblex@connect:~$ ./initiate_contact.sh",
     "contact.title": "ESTABLISH CONNECTION",
     "contact.header1": "╔══════════════════════════════════════════════════════╗",
-    "contact.header2": "║ PHANTOM.DEV SECURE COMMUNICATION CHANNEL             ║",
+    "contact.header2": "║ DOBLEX.DEV SECURE COMMUNICATION CHANNEL             ║",
     "contact.header3": "║ Type 'help' for available commands                   ║",
     "contact.header4": "╚══════════════════════════════════════════════════════╝",
     "contact.placeholder": "Type a command...",
@@ -456,7 +456,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     "footer.system": "[SYSTEM]",
-    "footer.rights": "PHANTOM.DEV © 2026 — ALL RIGHTS RESERVED",
+    "footer.rights": "DOBLEX.DEV © 2026 — ALL RIGHTS RESERVED",,
     "footer.session": "SESSION:",
 
     // Language toggle

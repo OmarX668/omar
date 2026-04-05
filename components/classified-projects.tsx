@@ -260,7 +260,7 @@ export function ClassifiedProjects() {
 
         {/* Terminal prompt */}
         <div className="mt-10 text-muted-foreground text-sm">
-          <span className="text-primary">phantom@classified:~$</span> echo &quot;{t("projects.more")}&quot;
+          <span className="text-primary">doblex@classified:~$</span> echo &quot;{t("projects.more")}&quot;
           <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>
       </div>

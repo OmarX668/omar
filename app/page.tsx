@@ -9,7 +9,7 @@ import { CommandContact } from "@/components/command-contact";
 import { SystemNav } from "@/components/system-nav";
 import { LanguageProvider, useLanguage } from "@/lib/language-context";
 
-function PhantomOSContent() {
+function DOBLEXContent() {
   const [bootComplete, setBootComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [sectionsVisible, setSectionsVisible] = useState<Record<string, boolean>>({});
@@ -139,10 +139,12 @@ function BootSequence() {
     "",
     "╔══════════════════════════════════════════════════════╗",
     "║                                                      ║",
-    "║     █▀█ █░█ ▄▀█ █▄░█ ▀█▀ █▀█ █▀▄▀█                  ║",
-    "║     █▀▀ █▀█ █▀█ █░▀█ ░█░ █▄█ █░▀░█                  ║",
-    "║                                                      ║",
-    "║           D E V E L O P M E N T                      ║",
+    "║     ██████╗ ██╗      ██████╗ ██╗     ███████╗██╗  ██╗ ║",
+    "║     ██╔══██╗██║     ██╔═══██╗██║     ██╔════╝╚██╗██╔╝ ║",
+    "║     ██║  ██║██║     ██║   ██║██║     █████╗   ╚███╔╝  ║",
+    "║     ██║  ██║██║     ██║   ██║██║     ██╔══╝   ██╗██╗  ║",
+    "║     ██████╔╝███████╗╚██████╔╝███████╗███████╗██╔╝ ██╗ ║",
+    "║     ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝ ║",
     "║                                                      ║",
     "╚══════════════════════════════════════════════════════╝",
     "",
@@ -199,10 +201,10 @@ function BootSequence() {
   );
 }
 
-export default function PhantomOS() {
+export default function DOBLEX() {
   return (
     <LanguageProvider>
-      <PhantomOSContent />
+      <DOBLEXContent />
     </LanguageProvider>
   );
 }

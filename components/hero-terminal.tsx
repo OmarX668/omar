@@ -45,7 +45,7 @@ export function HeroTerminal() {
             <span className="w-3 h-3 rounded-full bg-primary" />
           </div>
           <span className="text-muted-foreground text-sm ms-4">
-            phantom@secure-shell:~$
+            doblex@secure-shell:~$
           </span>
         </div>
 

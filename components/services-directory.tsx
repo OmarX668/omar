@@ -167,7 +167,7 @@ export function ServicesDirectory() {
 
         {/* Terminal prompt */}
         <div className="mt-6 text-muted-foreground text-sm">
-          <span className="text-primary">phantom@services:~$</span> cat readme.txt
+          <span className="text-primary">doblex@services:~$</span> cat readme.txt
           <p className="mt-2 text-foreground">
             {t("services.readme")}
           </p>
@@ -198,3 +198,4 @@ function FileIcon() {
     </svg>
   );
 }
+

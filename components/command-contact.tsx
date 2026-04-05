@@ -16,7 +16,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "عرض الأوامر المتاحة",
       output: [
         "╔═══════════════════════════════════════════════════════════╗",
-        "║  أوامر النظام المتاحة — PHANTOM.DEV v4.2                  ║",
+        "║  أوامر النظام المتاحة — DOBLEX.DEV v4.2                  ║",
         "╚═══════════════════════════════════════════════════════════╝",
         "",
         "  help          عرض هذه القائمة",
@@ -57,7 +57,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "حالة النظام",
       output: [
         "╔══════════════════════════════════════╗",
-        "║     حالة نظام PHANTOM.DEV           ║",
+        "║     حالة نظام DOBLEX.DEV           ║",
         "╠══════════════════════════════════════╣",
         "║  السيرفر:      ███████████  99.9%   ║",
         "║  الاستجابة:    < 2 ساعة             ║",
@@ -72,12 +72,12 @@ const getCommands = (lang: "ar" | "en") => {
     "ping": {
       desc: "اختبار الاتصال",
       output: [
-        "PING phantom.dev (127.0.0.1): 56 bytes",
-        "64 bytes from phantom.dev: icmp_seq=0 ttl=64 time=0.042 ms",
-        "64 bytes from phantom.dev: icmp_seq=1 ttl=64 time=0.039 ms",
-        "64 bytes from phantom.dev: icmp_seq=2 ttl=64 time=0.041 ms",
+        "PING doblex.dev (127.0.0.1): 56 bytes",
+        "64 bytes from doblex.dev: icmp_seq=0 ttl=64 time=0.042 ms",
+        "64 bytes from doblex.dev: icmp_seq=1 ttl=64 time=0.039 ms",
+        "64 bytes from doblex.dev: icmp_seq=2 ttl=64 time=0.041 ms",
         "",
-        "--- phantom.dev ping statistics ---",
+        "--- doblex.dev ping statistics ---",
         "3 packets transmitted, 3 received, 0% packet loss",
         "",
         "✓ الاتصال ممتاز. نحن نستمع."
@@ -165,9 +165,9 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "معلومات النظام",
       output: [
         "",
-        "        ██████████████         phantom@dev",
+        "        ██████████████         doblex@dev",
         "      ████            ████     ─────────────",
-        "    ████  ░░░░░░░░░░░░  ████   OS: PHANTOM.DEV v4.2",
+        "    ████  ░░░░░░░░░░░░  ████   OS: DOBLEX.DEV v4.2",
         "   ████ ░░░░░░░░░░░░░░░░ ████  Kernel: Node.js LTS",
         "  ████ ░░░░░░░░░░░░░░░░░░ ████ Uptime: 99.9%",
         "  ████ ░░░░ PHANTOM ░░░░ ████  Shell: Terminal v2.0",
@@ -184,7 +184,7 @@ const getCommands = (lang: "ar" | "en") => {
       output: [
         "",
         "  ╔════════════════════════════════════════╗",
-        "  ║         مهارات PHANTOM.DEV             ║",
+        "  ║         مهارات DOBLEX.DEV             ║",
         "  ╠════════════════════════════════════════╣",
         "  ║  Discord.js   ████████████████  100%   ║",
         "  ║  React/Next   ███████████████░   95%   ║",
@@ -218,7 +218,7 @@ const getCommands = (lang: "ar" | "en") => {
       output: [
         "",
         "  ╔════════════════════════════════════╗",
-        "  ║     الطقس في PHANTOM.DEV          ║",
+        "  ║     الطقس في DOBLEX.DEV          ║",
         "  ╠════════════════════════════════════╣",
         "  ║                                    ║",
         "  ║     ☁️  غائم مع احتمال كود        ║",
@@ -275,7 +275,7 @@ const getCommands = (lang: "ar" | "en") => {
         "  ║       🎮 رابط سيرفر ديسكورد 🎮        ║",
         "  ╠════════════════════════════════════════╣",
         "  ║                                        ║",
-        "  ║   discord.gg/phantom                   ║",
+        "  ║   discord.gg/doblex                   ║",
         "  ║                                        ║",
         "  ║   ← انقر الزر بالأسفل للانضمام       ║",
         "  ║                                        ║",
@@ -301,7 +301,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "قراءة الملف",
       output: [
         "",
-        "# PHANTOM.DEV",
+        "# DOBLEX.DEV",
         "",
         "مرحباً بك في نظامنا السري.",
         "نحن نبني أحلام المطورين.",
@@ -315,7 +315,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "الخروج",
       output: [
         "",
-        "  ⚠ لا يمكنك الهروب من PHANTOM.DEV",
+        "  ⚠ لا يمكنك الهروب من DOBLEX.DEV",
         "  ⚠ أنت هنا للأبد الآن",
         "  ⚠ استرخِ واستمتع بالكود",
         "",
@@ -332,7 +332,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "Show available commands",
       output: [
         "╔═══════════════════════════════════════════════════════════╗",
-        "║  Available System Commands — PHANTOM.DEV v4.2             ║",
+        "║  Available System Commands — DOBLEX.DEV v4.2             ║",
         "╚═══════════════════════════════════════════════════════════╝",
         "",
         "  help          Show this menu",
@@ -373,7 +373,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "System status",
       output: [
         "╔══════════════════════════════════════╗",
-        "║     PHANTOM.DEV SYSTEM STATUS        ║",
+        "║     DOBLEX.DEV SYSTEM STATUS        ║",
         "╠══════════════════════════════════════╣",
         "║  Server:       ███████████  99.9%    ║",
         "║  Response:     < 2 hours             ║",
@@ -388,12 +388,12 @@ const getCommands = (lang: "ar" | "en") => {
     "ping": {
       desc: "Test connection",
       output: [
-        "PING phantom.dev (127.0.0.1): 56 bytes",
-        "64 bytes from phantom.dev: icmp_seq=0 ttl=64 time=0.042 ms",
-        "64 bytes from phantom.dev: icmp_seq=1 ttl=64 time=0.039 ms",
-        "64 bytes from phantom.dev: icmp_seq=2 ttl=64 time=0.041 ms",
+        "PING doblex.dev (127.0.0.1): 56 bytes",
+        "64 bytes from doblex.dev: icmp_seq=0 ttl=64 time=0.042 ms",
+        "64 bytes from doblex.dev: icmp_seq=1 ttl=64 time=0.039 ms",
+        "64 bytes from doblex.dev: icmp_seq=2 ttl=64 time=0.041 ms",
         "",
-        "--- phantom.dev ping statistics ---",
+        "--- doblex.dev ping statistics ---",
         "3 packets transmitted, 3 received, 0% packet loss",
         "",
         "✓ Connection excellent. We're listening."
@@ -481,9 +481,9 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "System info",
       output: [
         "",
-        "        ██████████████         phantom@dev",
+        "        ██████████████         doblex@dev",
         "      ████            ████     ─────────────",
-        "    ████  ░░░░░░░░░░░░  ████   OS: PHANTOM.DEV v4.2",
+        "    ████  ░░░░░░░░░░░░  ████   OS: DOBLEX.DEV v4.2",
         "   ████ ░░░░░░░░░░░░░░░░ ████  Kernel: Node.js LTS",
         "  ████ ░░░░░░░░░░░░░░░░░░ ████ Uptime: 99.9%",
         "  ████ ░░░░ PHANTOM ░░░░ ████  Shell: Terminal v2.0",
@@ -500,7 +500,7 @@ const getCommands = (lang: "ar" | "en") => {
       output: [
         "",
         "  ╔════════════════════════════════════════╗",
-        "  ║         PHANTOM.DEV SKILLS             ║",
+        "  ║         DOBLEX.DEV SKILLS             ║",
         "  ╠════════════════════════════════════════╣",
         "  ║  Discord.js   ████████████████  100%   ║",
         "  ║  React/Next   ███████████████░   95%   ║",
@@ -534,7 +534,7 @@ const getCommands = (lang: "ar" | "en") => {
       output: [
         "",
         "  ╔════════════════════════════════════╗",
-        "  ║     PHANTOM.DEV WEATHER            ║",
+        "  ║     DOBLEX.DEV WEATHER            ║",
         "  ╠════════════════════════════════════╣",
         "  ║                                    ║",
         "  ║     ☁️  Cloudy with chance of code ║",
@@ -591,7 +591,7 @@ const getCommands = (lang: "ar" | "en") => {
         "  ║       🎮 DISCORD SERVER LINK 🎮        ║",
         "  ╠════════════════════════════════════════╣",
         "  ║                                        ║",
-        "  ║   discord.gg/phantom                   ║",
+        "  ║   discord.gg/doblex                   ║",
         "  ║                                        ║",
         "  ║   ← Click the button below to join    ║",
         "  ║                                        ║",
@@ -617,7 +617,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "Read file",
       output: [
         "",
-        "# PHANTOM.DEV",
+        "# DOBLEX.DEV",
         "",
         "Welcome to our secret system.",
         "We build developer dreams.",
@@ -631,7 +631,7 @@ const getCommands = (lang: "ar" | "en") => {
       desc: "Exit",
       output: [
         "",
-        "  ⚠ You cannot escape PHANTOM.DEV",
+        "  ⚠ You cannot escape DOBLEX.DEV",
         "  ⚠ You're here forever now",
         "  ⚠ Relax and enjoy the code",
         "",
@@ -716,7 +716,7 @@ export function CommandContact() {
               <span className="w-3 h-3 rounded-full bg-primary" />
             </div>
             <span className="text-muted-foreground text-sm ms-4">
-              phantom@secure-channel — bash
+              doblex@secure-channel — bash
             </span>
           </div>
 
@@ -734,7 +734,7 @@ export function CommandContact() {
             {commandHistory.map((item, i) => (
               <div key={i} className="mb-4 text-sm">
                 <p>
-                  <span className="text-primary">phantom@connect:~$</span>{" "}
+                  <span className="text-primary">doblex@connect:~$</span>{" "}
                   <span className="text-foreground">{item.cmd}</span>
                 </p>
                 <div className={`mt-2 ${dir === "rtl" ? "pr-4" : "pl-4"} ${item.isError ? "text-destructive" : "text-muted-foreground"}`}>
@@ -747,7 +747,7 @@ export function CommandContact() {
 
             {/* Input Line */}
             <form onSubmit={handleSubmit} className="flex items-center text-sm">
-              <span className="text-primary me-2">phantom@connect:~$</span>
+              <span className="text-primary me-2">doblex@connect:~$</span>
               <input
                 type="text"
                 value={inputValue}
@@ -769,7 +769,7 @@ export function CommandContact() {
         <div className="mt-8 grid md:grid-cols-2 gap-4">
           {/* Discord CTA */}
           <a
-            href="https://discord.gg/phantom"
+            href="https://discord.gg/doblex"
             target="_blank"
             rel="noopener noreferrer"
             className="group border border-primary bg-primary/5 p-6 hover:bg-primary/10 hover:glow-green transition-all duration-300"
@@ -789,13 +789,13 @@ export function CommandContact() {
             </div>
             <div className="mt-4 font-mono text-sm">
               <span className="text-muted-foreground">$</span>{" "}
-              <span className="text-foreground">open discord://phantom.dev</span>
+              <span className="text-foreground">open discord://doblex.dev</span>
             </div>
           </a>
 
           {/* Email CTA */}
           <a
-            href="mailto:contact@phantom.dev"
+            href="mailto:contact@doblex.dev"
             className="group border border-border p-6 hover:border-primary/50 transition-all duration-300"
           >
             <div className="flex items-center gap-4">
@@ -813,7 +813,7 @@ export function CommandContact() {
             </div>
             <div className="mt-4 font-mono text-sm">
               <span className="text-muted-foreground">$</span>{" "}
-              <span className="text-foreground">mail contact@phantom.dev</span>
+              <span className="text-foreground">mail contact@doblex.dev</span>
             </div>
           </a>
         </div>
@@ -836,7 +836,7 @@ export function CommandContact() {
 
         {/* Terminal prompt */}
         <div className="mt-8 text-muted-foreground text-sm">
-          <span className="text-primary">phantom@connect:~$</span> echo
+          <span className="text-primary">doblex@connect:~$</span> echo
           &quot;{t("contact.awaiting")}&quot;
           <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>

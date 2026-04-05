@@ -55,7 +55,7 @@ export function SystemNav() {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <span className="text-primary font-bold text-lg glitch-hover cursor-pointer" onClick={() => scrollTo("hero")}>
-              PHANTOM<span className="text-foreground">.DEV</span>
+              DOBLEX<span className="text-foreground">.DEV</span>
             </span>
             <span className="hidden md:block text-muted-foreground text-xs">
               {t("nav.secure")}
