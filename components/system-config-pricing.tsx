@@ -11,7 +11,7 @@ export function SystemConfigPricing() {
     {
       id: "basic",
       paramKey: "tier.basic.name",
-      value: "$50-150",
+      valueKey: "tier.basic.value",
       descKey: "tier.basic.desc",
       featureKeys: [
         "tier.basic.f1",
@@ -24,7 +24,7 @@ export function SystemConfigPricing() {
     {
       id: "standard",
       paramKey: "tier.standard.name",
-      value: "$150-500",
+      valueKey: "tier.standard.value",
       descKey: "tier.standard.desc",
       featureKeys: [
         "tier.standard.f1",
@@ -39,7 +39,7 @@ export function SystemConfigPricing() {
     {
       id: "premium",
       paramKey: "tier.premium.name",
-      value: "$500-1500",
+      valueKey: "tier.premium.value",
       descKey: "tier.premium.desc",
       featureKeys: [
         "tier.premium.f1",
@@ -54,7 +54,7 @@ export function SystemConfigPricing() {
     {
       id: "enterprise",
       paramKey: "tier.enterprise.name",
-      value: t("config.consultation") === "مجاني" ? "مخصص" : "CUSTOM",
+      valueKey: "tier.enterprise.value",
       descKey: "tier.enterprise.desc",
       featureKeys: [
         "tier.enterprise.f1",
@@ -69,16 +69,16 @@ export function SystemConfigPricing() {
   ];
 
   const additionalConfig = [
-    { paramKey: "config.hosting", value: "$5-25", type: "string" },
-    { paramKey: "config.rush", value: "+50%", type: "modifier" },
-    { paramKey: "config.maintenance", value: "$25-100/mo", type: "string" },
+    { paramKey: "config.hosting", valueKey: "config.hostingValue", type: "string" },
+    { paramKey: "config.rush", valueKey: "config.rushValue", type: "modifier" },
+    { paramKey: "config.maintenance", valueKey: "config.maintenanceValue", type: "string" },
     { paramKey: "config.source", valueKey: "config.included", type: "boolean" },
     { paramKey: "config.docs", valueKey: "config.included", type: "boolean" },
     { paramKey: "config.consultation", valueKey: "config.free", type: "boolean" },
   ];
 
   return (
-    <div dir={dir} className="min-h-screen py-20 px-6">
+    <div dir={dir} className="min-h-screen py-20 px-6 section-animate">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
@@ -127,14 +127,17 @@ export function SystemConfigPricing() {
                       {t("pricing.recommended")}
                     </span>
                   )}
-                  <div className="text-xs text-muted-foreground mb-1">
-                    {t(tier.paramKey)}=
+                  <div className="text-xs text-muted-foreground mb-1 font-mono">
+                    {t(tier.paramKey)}
                   </div>
-                  <div className="text-2xl font-bold text-primary mb-2">
-                    {tier.value}
+                  <div className="text-2xl font-bold text-primary mb-2 glow-green-text">
+                    {t(tier.valueKey)}
                   </div>
-                  <div className="text-sm text-foreground">
+                  <div className="text-sm text-foreground mb-3">
                     {t(tier.descKey)}
+                  </div>
+                  <div className="text-xs text-primary/70 border-t border-border/50 pt-2 mt-2">
+                    {t("pricing.probot")}
                   </div>
                 </button>
               ))}
@@ -150,7 +153,7 @@ export function SystemConfigPricing() {
                   .find((tier) => tier.id === selectedTier)
                   ?.featureKeys.map((key, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm">
-                      <span className="text-primary">✓</span>
+                      <span className="text-primary">[+]</span>
                       <span className="text-foreground">{t(key)}</span>
                     </div>
                   ))}
@@ -187,7 +190,7 @@ export function SystemConfigPricing() {
                       {t(config.paramKey)}
                     </td>
                     <td className="px-4 py-3 text-primary">
-                      {config.valueKey ? t(config.valueKey) : config.value}
+                      {t(config.valueKey)}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
                       {config.type}

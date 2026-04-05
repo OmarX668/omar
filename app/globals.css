@@ -256,3 +256,175 @@ main, nav, section, footer {
 .me-4 { margin-inline-end: 1rem; }
 .ps-4 { padding-inline-start: 1rem; }
 .pe-4 { padding-inline-end: 1rem; }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* TOP-TO-BOTTOM ENTRANCE ANIMATIONS                           */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* Animated scanline sweep - top to bottom */
+@keyframes scanlineSweep {
+  0% {
+    background-position: 0 -100vh;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+.scanlines-animate {
+  animation: scanlineSweep 3s ease-out forwards;
+}
+
+/* Section slide down animation */
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.section-slide-down {
+  opacity: 0;
+  transform: translateY(-50px);
+  filter: blur(4px);
+}
+
+.section-slide-down.visible {
+  animation: slideDownFade 0.6s ease-out forwards;
+}
+
+/* Boot line animation - each line drops from top */
+@keyframes bootLineDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.boot-line-animate {
+  animation: bootLineDrop 0.3s ease-out forwards;
+}
+
+/* Boot scan line - sweeps from top to bottom */
+@keyframes bootScan {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.boot-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    #00FF41,
+    transparent
+  );
+  box-shadow: 0 0 20px #00FF41, 0 0 40px #00FF41;
+  animation: bootScan 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Boot sequence container - starts from top */
+.boot-sequence-container {
+  animation: bootContainerReveal 0.5s ease-out forwards;
+}
+
+@keyframes bootContainerReveal {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Section animate class for individual sections */
+.section-animate {
+  position: relative;
+}
+
+.section-animate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00FF41, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.section-animate:hover::before {
+  opacity: 1;
+}
+
+/* Curtain drop effect for main content */
+@keyframes curtainDrop {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* Staggered reveal for grid items */
+@keyframes staggerReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Terminal text reveal - character by character from top */
+@keyframes terminalTypeReveal {
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  100% {
+    max-height: 1000px;
+    opacity: 1;
+  }
+}
+
+/* Glow pulse on section enter */
+@keyframes glowPulseIn {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 255, 65, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 255, 65, 0);
+  }
+}
+
+.section-slide-down.visible {
+  animation: slideDownFade 0.6s ease-out forwards, glowPulseIn 1s ease-out 0.3s;
+}

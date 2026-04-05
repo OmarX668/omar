@@ -1,21 +1,686 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/lib/language-context";
+
+interface CommandResult {
+  cmd: string;
+  output: string[];
+  isError?: boolean;
+}
+
+// Creative terminal commands with responses
+const getCommands = (lang: "ar" | "en") => {
+  const commands: Record<string, { desc: string; output: string[] }> = lang === "ar" ? {
+    "help": {
+      desc: "عرض الأوامر المتاحة",
+      output: [
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  أوامر النظام المتاحة — PHANTOM.DEV v4.2                  ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+        "  help          عرض هذه القائمة",
+        "  whoami        من أنت؟",
+        "  status        حالة النظام",
+        "  ping          اختبار الاتصال",
+        "  fortune       اقتباس عشوائي للهاكرز",
+        "  matrix        دخول الماتريكس",
+        "  hack          اختراق البنتاغون",
+        "  coffee        طلب قهوة",
+        "  sudo rm -rf   حذف الإنترنت",
+        "  neofetch      معلومات النظام",
+        "  skills        عرض المهارات",
+        "  secret        كشف السر",
+        "  weather       الطقس في السيرفر",
+        "  credits       رصيد ديسكورد",
+        "  uptime        وقت تشغيل النظام",
+        "  discord       فتح رابط الديسكورد",
+        "",
+        "  [نصيحة: جرب أوامر عشوائية... ربما تكتشف أسراراً]",
+      ]
+    },
+    "whoami": {
+      desc: "هوية المستخدم",
+      output: [
+        "┌─────────────────────────────────────┐",
+        "│  المستخدم: زائر_مجهول              │",
+        "│  التصريح: المستوى 1 (مقيد)         │",
+        "│  الموقع: [محجوب]                   │",
+        "│  الحالة: قيد المراقبة               │",
+        "│  IP: ***.***.***.***               │",
+        "└─────────────────────────────────────┘",
+        "",
+        "⚠ ملاحظة: تم تسجيل بصمتك الرقمية",
+      ]
+    },
+    "status": {
+      desc: "حالة النظام",
+      output: [
+        "╔══════════════════════════════════════╗",
+        "║     حالة نظام PHANTOM.DEV           ║",
+        "╠══════════════════════════════════════╣",
+        "║  السيرفر:      ███████████  99.9%   ║",
+        "║  الاستجابة:    < 2 ساعة             ║",
+        "║  المشاريع:     3 نشطة               ║",
+        "║  الانتظار:     متاح                 ║",
+        "║  الوضع:        جاهز للمهام          ║",
+        "╚══════════════════════════════════════╝",
+        "",
+        "[الحالة: متصل ● جاهز لاستقبال الطلبات]"
+      ]
+    },
+    "ping": {
+      desc: "اختبار الاتصال",
+      output: [
+        "PING phantom.dev (127.0.0.1): 56 bytes",
+        "64 bytes from phantom.dev: icmp_seq=0 ttl=64 time=0.042 ms",
+        "64 bytes from phantom.dev: icmp_seq=1 ttl=64 time=0.039 ms",
+        "64 bytes from phantom.dev: icmp_seq=2 ttl=64 time=0.041 ms",
+        "",
+        "--- phantom.dev ping statistics ---",
+        "3 packets transmitted, 3 received, 0% packet loss",
+        "",
+        "✓ الاتصال ممتاز. نحن نستمع."
+      ]
+    },
+    "fortune": {
+      desc: "حكمة الهاكر",
+      output: [
+        "",
+        "  ╔═══════════════════════════════════════════════════╗",
+        "  ║                                                   ║",
+        "  ║   \"الكود المثالي لا يُكتب.                      ║",
+        "  ║    بل يُنحت من الفوضى.\"                         ║",
+        "  ║                                                   ║",
+        "  ║                    — مجهول، 2024                  ║",
+        "  ╚═══════════════════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "matrix": {
+      desc: "دخول الماتريكس",
+      output: [
+        "",
+        "  جارٍ تحميل الحبة الحمراء...",
+        "",
+        "  01001000 01000101 01001100 01001100 01001111",
+        "  ░▒▓█ الماتريكس حقيقية █▓▒░",
+        "  01010111 01001111 01010010 01001100 01000100",
+        "",
+        "  ⚠ خطأ: أنت بالفعل داخل الماتريكس",
+        "  ⚠ لا يمكن الخروج. استمتع بالكود.",
+        "",
+      ]
+    },
+    "hack": {
+      desc: "اختراق البنتاغون",
+      output: [
+        "",
+        "  [!] جارٍ الاتصال بـ pentagon.gov...",
+        "  [!] تجاوز جدار الحماية...",
+        "  [!] كسر التشفير AES-256...",
+        "  [!] الدخول إلى قاعدة البيانات...",
+        "",
+        "  ██████████████████████████ 100%",
+        "",
+        "  ❌ فشل: هذه مزحة فقط",
+        "  ❌ نحن نبرمج بوتات ديسكورد، لسنا NSA",
+        "  ❌ لكن لو أردت... 😏",
+        "",
+      ]
+    },
+    "coffee": {
+      desc: "طلب قهوة",
+      output: [
+        "",
+        "  جارٍ تحضير القهوة...",
+        "",
+        "       ( (",
+        "        ) )",
+        "      ........",
+        "      |      |]",
+        "      \\      /",
+        "       `----'",
+        "",
+        "  ☕ القهوة جاهزة!",
+        "  ⚠ تحذير: المبرمج يعمل على كافيين",
+        "",
+      ]
+    },
+    "sudo rm -rf": {
+      desc: "حذف كل شيء",
+      output: [
+        "",
+        "  ⚠ تحذير: أنت على وشك حذف الإنترنت بالكامل",
+        "",
+        "  [▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░] 50%",
+        "",
+        "  ❌ خطأ: صلاحيات sudo مرفوضة",
+        "  ❌ فقط المطورين المعتمدين يمكنهم تدمير الإنترنت",
+        "  ❌ جرب الانضمام للفريق أولاً",
+        "",
+      ]
+    },
+    "neofetch": {
+      desc: "معلومات النظام",
+      output: [
+        "",
+        "        ██████████████         phantom@dev",
+        "      ████            ████     ─────────────",
+        "    ████  ░░░░░░░░░░░░  ████   OS: PHANTOM.DEV v4.2",
+        "   ████ ░░░░░░░░░░░░░░░░ ████  Kernel: Node.js LTS",
+        "  ████ ░░░░░░░░░░░░░░░░░░ ████ Uptime: 99.9%",
+        "  ████ ░░░░ PHANTOM ░░░░ ████  Shell: Terminal v2.0",
+        "  ████ ░░░░░░░░░░░░░░░░░░ ████ Resolution: ∞ x ∞",
+        "   ████ ░░░░░░░░░░░░░░░░ ████  Theme: Hacker Dark",
+        "    ████  ░░░░░░░░░░░░  ████   Terminal: Custom",
+        "      ████            ████     CPU: Brain.js @3GHz",
+        "        ██████████████         Memory: ∞ GB",
+        "",
+      ]
+    },
+    "skills": {
+      desc: "عرض المهارات",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║         مهارات PHANTOM.DEV             ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║  Discord.js   ████████████████  100%   ║",
+        "  ║  React/Next   ███████████████░   95%   ║",
+        "  ║  Node.js      ████████████████  100%   ║",
+        "  ║  TypeScript   ███████████████░   95%   ║",
+        "  ║  Database     ██████████████░░   90%   ║",
+        "  ║  API Design   ███████████████░   95%   ║",
+        "  ║  Coffee       ████████████████  100%   ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "secret": {
+      desc: "كشف السر",
+      output: [
+        "",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  ⚠ تنبيه: معلومات سرية للغاية ⚠    ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "",
+        "  السر هو... نحن نحب ما نفعله.",
+        "  كل سطر كود نكتبه بشغف.",
+        "  وكل مشروع يحمل جزءاً منا.",
+        "",
+        "  🔐 [تم تسجيل هذا الكشف في السجلات]",
+        "",
+      ]
+    },
+    "weather": {
+      desc: "الطقس في السيرفر",
+      output: [
+        "",
+        "  ╔════════════════════════════════════╗",
+        "  ║     الطقس في PHANTOM.DEV          ║",
+        "  ╠════════════════════════════════════╣",
+        "  ║                                    ║",
+        "  ║     ☁️  غائم مع احتمال كود        ║",
+        "  ║                                    ║",
+        "  ║     درجة الحرارة: 🔥 ساخن         ║",
+        "  ║     الرطوبة: ☕ 100% كافيين       ║",
+        "  ║     الرياح: 💨 سريع جداً          ║",
+        "  ║                                    ║",
+        "  ╚════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "credits": {
+      desc: "رصيد ديسكورد",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║          رصيد كريدت ديسكورد            ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║                                        ║",
+        "  ║   الرصيد الحالي: ??? كريدت            ║",
+        "  ║   الحالة: غير مسجل                     ║",
+        "  ║                                        ║",
+        "  ║   للتسجيل والحصول على كريدت:          ║",
+        "  ║   → انضم لسيرفر الديسكورد              ║",
+        "  ║   → استخدم ProBot للتحويل             ║",
+        "  ║                                        ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+        "  [اكتب 'discord' للحصول على رابط السيرفر]",
+      ]
+    },
+    "uptime": {
+      desc: "وقت تشغيل النظام",
+      output: [
+        "",
+        "  ╔════════════════════════════════════╗",
+        "  ║         إحصائيات التشغيل          ║",
+        "  ╠════════════════════════════════════╣",
+        "  ║  وقت التشغيل:    365 يوم 23:59:59 ║",
+        "  ║  آخر إعادة:      لا يوجد          ║",
+        "  ║  الأعطال:        0                ║",
+        "  ║  نسبة التشغيل:   99.99%           ║",
+        "  ╚════════════════════════════════════╝",
+        "",
+        "  💪 نعمل بدون توقف!",
+      ]
+    },
+    "discord": {
+      desc: "رابط الديسكورد",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║       🎮 رابط سيرفر ديسكورد 🎮        ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║                                        ║",
+        "  ║   discord.gg/phantom                   ║",
+        "  ║                                        ║",
+        "  ║   ← انقر الزر بالأسفل للانضمام       ║",
+        "  ║                                        ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+        "  ⚡ نحن بانتظارك!",
+      ]
+    },
+    "ls": {
+      desc: "عرض الملفات",
+      output: [
+        "drwxr-xr-x  projects/",
+        "drwxr-xr-x  secrets/",
+        "-rw-r--r--  README.md",
+        "-rwx------  admin_panel.exe",
+        "-rw-------  classified.dat",
+        "-rw-r--r--  skills.json",
+        "",
+        "⚠ بعض الملفات مشفرة. صلاحيات مطلوبة."
+      ]
+    },
+    "cat readme": {
+      desc: "قراءة الملف",
+      output: [
+        "",
+        "# PHANTOM.DEV",
+        "",
+        "مرحباً بك في نظامنا السري.",
+        "نحن نبني أحلام المطورين.",
+        "",
+        "للطلبات: تواصل عبر ديسكورد",
+        "للأسرار: واصل الاستكشاف...",
+        "",
+      ]
+    },
+    "exit": {
+      desc: "الخروج",
+      output: [
+        "",
+        "  ⚠ لا يمكنك الهروب من PHANTOM.DEV",
+        "  ⚠ أنت هنا للأبد الآن",
+        "  ⚠ استرخِ واستمتع بالكود",
+        "",
+        "  (مجرد مزحة... أو لا؟ 👀)",
+        "",
+      ]
+    },
+    "clear": {
+      desc: "مسح الشاشة",
+      output: []
+    },
+  } : {
+    "help": {
+      desc: "Show available commands",
+      output: [
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  Available System Commands — PHANTOM.DEV v4.2             ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+        "  help          Show this menu",
+        "  whoami        Who are you?",
+        "  status        System status",
+        "  ping          Test connection",
+        "  fortune       Random hacker quote",
+        "  matrix        Enter the Matrix",
+        "  hack          Hack the Pentagon",
+        "  coffee        Order coffee",
+        "  sudo rm -rf   Delete the internet",
+        "  neofetch      System info",
+        "  skills        Show skills",
+        "  secret        Reveal the secret",
+        "  weather       Server weather",
+        "  credits       Discord credits",
+        "  uptime        System uptime",
+        "  discord       Open Discord link",
+        "",
+        "  [Tip: Try random commands... you might discover secrets]",
+      ]
+    },
+    "whoami": {
+      desc: "User identity",
+      output: [
+        "┌─────────────────────────────────────┐",
+        "│  User: anonymous_visitor            │",
+        "│  Clearance: Level 1 (Restricted)    │",
+        "│  Location: [REDACTED]               │",
+        "│  Status: Under Observation          │",
+        "│  IP: ***.***.***.***                │",
+        "└─────────────────────────────────────┘",
+        "",
+        "⚠ Note: Your digital fingerprint has been logged",
+      ]
+    },
+    "status": {
+      desc: "System status",
+      output: [
+        "╔══════════════════════════════════════╗",
+        "║     PHANTOM.DEV SYSTEM STATUS        ║",
+        "╠══════════════════════════════════════╣",
+        "║  Server:       ███████████  99.9%    ║",
+        "║  Response:     < 2 hours             ║",
+        "║  Projects:     3 active              ║",
+        "║  Queue:        Available             ║",
+        "║  Mode:         Ready for missions    ║",
+        "╚══════════════════════════════════════╝",
+        "",
+        "[Status: ONLINE ● Ready to accept requests]"
+      ]
+    },
+    "ping": {
+      desc: "Test connection",
+      output: [
+        "PING phantom.dev (127.0.0.1): 56 bytes",
+        "64 bytes from phantom.dev: icmp_seq=0 ttl=64 time=0.042 ms",
+        "64 bytes from phantom.dev: icmp_seq=1 ttl=64 time=0.039 ms",
+        "64 bytes from phantom.dev: icmp_seq=2 ttl=64 time=0.041 ms",
+        "",
+        "--- phantom.dev ping statistics ---",
+        "3 packets transmitted, 3 received, 0% packet loss",
+        "",
+        "✓ Connection excellent. We're listening."
+      ]
+    },
+    "fortune": {
+      desc: "Hacker wisdom",
+      output: [
+        "",
+        "  ╔═══════════════════════════════════════════════════╗",
+        "  ║                                                   ║",
+        "  ║   \"Perfect code isn't written.                   ║",
+        "  ║    It's carved from chaos.\"                      ║",
+        "  ║                                                   ║",
+        "  ║                    — Anonymous, 2024              ║",
+        "  ╚═══════════════════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "matrix": {
+      desc: "Enter the Matrix",
+      output: [
+        "",
+        "  Loading red pill...",
+        "",
+        "  01001000 01000101 01001100 01001100 01001111",
+        "  ░▒▓█ THE MATRIX IS REAL █▓▒░",
+        "  01010111 01001111 01010010 01001100 01000100",
+        "",
+        "  ⚠ Error: You're already inside the Matrix",
+        "  ⚠ Cannot exit. Enjoy the code.",
+        "",
+      ]
+    },
+    "hack": {
+      desc: "Hack the Pentagon",
+      output: [
+        "",
+        "  [!] Connecting to pentagon.gov...",
+        "  [!] Bypassing firewall...",
+        "  [!] Cracking AES-256 encryption...",
+        "  [!] Accessing database...",
+        "",
+        "  ██████████████████████████ 100%",
+        "",
+        "  ❌ Failed: This is just a joke",
+        "  ❌ We code Discord bots, we're not the NSA",
+        "  ❌ But if you wanted... 😏",
+        "",
+      ]
+    },
+    "coffee": {
+      desc: "Order coffee",
+      output: [
+        "",
+        "  Brewing coffee...",
+        "",
+        "       ( (",
+        "        ) )",
+        "      ........",
+        "      |      |]",
+        "      \\      /",
+        "       `----'",
+        "",
+        "  ☕ Coffee ready!",
+        "  ⚠ Warning: Developer runs on caffeine",
+        "",
+      ]
+    },
+    "sudo rm -rf": {
+      desc: "Delete everything",
+      output: [
+        "",
+        "  ⚠ Warning: You're about to delete the entire internet",
+        "",
+        "  [▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░] 50%",
+        "",
+        "  ❌ Error: sudo permissions denied",
+        "  ❌ Only certified devs can destroy the internet",
+        "  ❌ Try joining the team first",
+        "",
+      ]
+    },
+    "neofetch": {
+      desc: "System info",
+      output: [
+        "",
+        "        ██████████████         phantom@dev",
+        "      ████            ████     ─────────────",
+        "    ████  ░░░░░░░░░░░░  ████   OS: PHANTOM.DEV v4.2",
+        "   ████ ░░░░░░░░░░░░░░░░ ████  Kernel: Node.js LTS",
+        "  ████ ░░░░░░░░░░░░░░░░░░ ████ Uptime: 99.9%",
+        "  ████ ░░░░ PHANTOM ░░░░ ████  Shell: Terminal v2.0",
+        "  ████ ░░░░░░░░░░░░░░░░░░ ████ Resolution: ∞ x ∞",
+        "   ████ ░░░░░░░░░░░░░░░░ ████  Theme: Hacker Dark",
+        "    ████  ░░░░░░░░░░░░  ████   Terminal: Custom",
+        "      ████            ████     CPU: Brain.js @3GHz",
+        "        ██████████████         Memory: ∞ GB",
+        "",
+      ]
+    },
+    "skills": {
+      desc: "Show skills",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║         PHANTOM.DEV SKILLS             ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║  Discord.js   ████████████████  100%   ║",
+        "  ║  React/Next   ███████████████░   95%   ║",
+        "  ║  Node.js      ████████████████  100%   ║",
+        "  ║  TypeScript   ███████████████░   95%   ║",
+        "  ║  Database     ██████████████░░   90%   ║",
+        "  ║  API Design   ███████████████░   95%   ║",
+        "  ║  Coffee       ████████████████  100%   ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "secret": {
+      desc: "Reveal the secret",
+      output: [
+        "",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  ⚠ ALERT: TOP SECRET INFORMATION ⚠  ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "",
+        "  The secret is... we love what we do.",
+        "  Every line of code is written with passion.",
+        "  Every project carries a piece of us.",
+        "",
+        "  🔐 [This revelation has been logged]",
+        "",
+      ]
+    },
+    "weather": {
+      desc: "Server weather",
+      output: [
+        "",
+        "  ╔════════════════════════════════════╗",
+        "  ║     PHANTOM.DEV WEATHER            ║",
+        "  ╠════════════════════════════════════╣",
+        "  ║                                    ║",
+        "  ║     ☁️  Cloudy with chance of code ║",
+        "  ║                                    ║",
+        "  ║     Temperature: 🔥 Hot            ║",
+        "  ║     Humidity: ☕ 100% caffeine     ║",
+        "  ║     Wind: 💨 Very fast             ║",
+        "  ║                                    ║",
+        "  ╚════════════════════════════════════╝",
+        "",
+      ]
+    },
+    "credits": {
+      desc: "Discord credits",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║          DISCORD CREDITS BALANCE       ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║                                        ║",
+        "  ║   Current Balance: ??? CREDITS        ║",
+        "  ║   Status: Not registered              ║",
+        "  ║                                        ║",
+        "  ║   To register and get credits:        ║",
+        "  ║   → Join our Discord server           ║",
+        "  ║   → Use ProBot to transfer            ║",
+        "  ║                                        ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+        "  [Type 'discord' to get server link]",
+      ]
+    },
+    "uptime": {
+      desc: "System uptime",
+      output: [
+        "",
+        "  ╔════════════════════════════════════╗",
+        "  ║         UPTIME STATISTICS          ║",
+        "  ╠════════════════════════════════════╣",
+        "  ║  Uptime:       365 days 23:59:59   ║",
+        "  ║  Last restart: Never               ║",
+        "  ║  Crashes:      0                   ║",
+        "  ║  Availability: 99.99%              ║",
+        "  ╚════════════════════════════════════╝",
+        "",
+        "  💪 Running non-stop!",
+      ]
+    },
+    "discord": {
+      desc: "Discord link",
+      output: [
+        "",
+        "  ╔════════════════════════════════════════╗",
+        "  ║       🎮 DISCORD SERVER LINK 🎮        ║",
+        "  ╠════════════════════════════════════════╣",
+        "  ║                                        ║",
+        "  ║   discord.gg/phantom                   ║",
+        "  ║                                        ║",
+        "  ║   ← Click the button below to join    ║",
+        "  ║                                        ║",
+        "  ╚════════════════════════════════════════╝",
+        "",
+        "  ⚡ We're waiting for you!",
+      ]
+    },
+    "ls": {
+      desc: "List files",
+      output: [
+        "drwxr-xr-x  projects/",
+        "drwxr-xr-x  secrets/",
+        "-rw-r--r--  README.md",
+        "-rwx------  admin_panel.exe",
+        "-rw-------  classified.dat",
+        "-rw-r--r--  skills.json",
+        "",
+        "⚠ Some files are encrypted. Clearance required."
+      ]
+    },
+    "cat readme": {
+      desc: "Read file",
+      output: [
+        "",
+        "# PHANTOM.DEV",
+        "",
+        "Welcome to our secret system.",
+        "We build developer dreams.",
+        "",
+        "For requests: Contact via Discord",
+        "For secrets: Keep exploring...",
+        "",
+      ]
+    },
+    "exit": {
+      desc: "Exit",
+      output: [
+        "",
+        "  ⚠ You cannot escape PHANTOM.DEV",
+        "  ⚠ You're here forever now",
+        "  ⚠ Relax and enjoy the code",
+        "",
+        "  (Just kidding... or am I? 👀)",
+        "",
+      ]
+    },
+    "clear": {
+      desc: "Clear screen",
+      output: []
+    },
+  };
+  return commands;
+};
 
 export function CommandContact() {
   const [inputValue, setInputValue] = useState("");
-  const [commandHistory, setCommandHistory] = useState<{ cmd: string; type: string }[]>([]);
+  const [commandHistory, setCommandHistory] = useState<CommandResult[]>([]);
   const { t, dir, language } = useLanguage();
+  const commands = getCommands(language);
+
+  const handleCommand = useCallback((cmd: string) => {
+    const trimmedCmd = cmd.toLowerCase().trim();
+    
+    if (trimmedCmd === "clear") {
+      setCommandHistory([]);
+      return;
+    }
+
+    const commandData = commands[trimmedCmd];
+    
+    if (commandData) {
+      setCommandHistory(prev => [...prev, {
+        cmd,
+        output: commandData.output
+      }]);
+    } else {
+      setCommandHistory(prev => [...prev, {
+        cmd,
+        output: [t("cmd.unknown")],
+        isError: true
+      }]);
+    }
+  }, [commands, t]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      const cmd = inputValue.toLowerCase().trim();
-      let type = "unknown";
-      if (cmd === "help" || cmd === "مساعدة") type = "help";
-      else if (cmd === "status" || cmd === "الحالة") type = "status";
-      setCommandHistory([...commandHistory, { cmd: inputValue, type }]);
+      handleCommand(inputValue);
       setInputValue("");
     }
   };
@@ -29,7 +694,7 @@ export function CommandContact() {
   }, []);
 
   return (
-    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30">
+    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30 section-animate">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
@@ -56,7 +721,7 @@ export function CommandContact() {
           </div>
 
           {/* Terminal Body */}
-          <div className="p-6 min-h-[400px]">
+          <div className="p-6 min-h-[400px] max-h-[500px] overflow-y-auto">
             {/* Welcome Message */}
             <div className="mb-6 text-sm">
               <p className="text-primary">{t("contact.header1")}</p>
@@ -72,33 +737,11 @@ export function CommandContact() {
                   <span className="text-primary">phantom@connect:~$</span>{" "}
                   <span className="text-foreground">{item.cmd}</span>
                 </p>
-                {item.type === "help" && (
-                  <div className={`mt-2 text-muted-foreground ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
-                    <p>{t("cmd.help")}</p>
-                    <p className="text-primary">  discord   </p>
-                    <p className="text-muted-foreground">    - {t("cmd.discord")}</p>
-                    <p className="text-primary">  services  </p>
-                    <p className="text-muted-foreground">    - {t("cmd.services")}</p>
-                    <p className="text-primary">  quote     </p>
-                    <p className="text-muted-foreground">    - {t("cmd.quote")}</p>
-                    <p className="text-primary">  status    </p>
-                    <p className="text-muted-foreground">    - {t("cmd.status")}</p>
-                  </div>
-                )}
-                {item.type === "status" && (
-                  <div className={`mt-2 ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
-                    <p className="text-primary">{t("cmd.statusOnline")}</p>
-                    <p className="text-muted-foreground">{t("cmd.responseTime")}</p>
-                    <p className="text-muted-foreground">{t("cmd.activeProjects")}</p>
-                    <p className="text-muted-foreground">{t("cmd.queue")}</p>
-                  </div>
-                )}
-                {item.type === "unknown" && (
-                  <div className={`mt-2 text-muted-foreground ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
-                    <p>{t("cmd.processing")}</p>
-                    <p className="text-primary mt-2">{t("cmd.useDiscord")}</p>
-                  </div>
-                )}
+                <div className={`mt-2 ${dir === "rtl" ? "pr-4" : "pl-4"} ${item.isError ? "text-destructive" : "text-muted-foreground"}`}>
+                  {item.output.map((line, j) => (
+                    <p key={j} className={line.includes("✓") || line.includes("●") ? "text-primary" : ""}>{line || "\u00A0"}</p>
+                  ))}
+                </div>
               </div>
             ))}
 

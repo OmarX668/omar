@@ -143,7 +143,7 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.modified": "[معدّل]",
     "pricing.comment1": "# تكوين تسعير PHANTOM.DEV",
     "pricing.comment2": "# آخر تحديث:",
-    "pricing.comment3": "# جميع الأسعار بالدولار الأمريكي",
+    "pricing.comment3": "# جميع الأسعار بكريدت ديسكورد",
     "pricing.features": "# ميزات",
     "pricing.additional": "# معاملات إضافية",
     "pricing.param": "المعامل",
@@ -151,9 +151,11 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.type": "النوع",
     "pricing.recommended": "موصى به",
     "pricing.custom": "عرض مخصص متاح — تواصل للتسعير المؤسسي",
+    "pricing.probot": "[الدفع عبر كريدت PROBOT]",
 
-    // Pricing tiers
-    "tier.basic.name": "الباقة_الأساسية",
+    // Pricing tiers  
+    "tier.basic.name": "TIER_01.cfg",
+    "tier.basic.value": "500 كريدت",
     "tier.basic.desc": "حلول للمشاريع الصغيرة",
     "tier.basic.f1": "بوتات ديسكورد بسيطة (10-15 أمر)",
     "tier.basic.f2": "صفحات هبوط أساسية",
@@ -161,7 +163,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.basic.f4": "تسليم 3 أيام",
     "tier.basic.f5": "دعم 7 أيام",
 
-    "tier.standard.name": "الباقة_القياسية",
+    "tier.standard.name": "TIER_02.cfg",
+    "tier.standard.value": "1200 كريدت",
     "tier.standard.desc": "حلول احترافية للمجتمعات النامية",
     "tier.standard.f1": "بوتات ديسكورد متقدمة (+25 أمر)",
     "tier.standard.f2": "مواقع متعددة الصفحات",
@@ -170,7 +173,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.standard.f5": "دعم 30 يوم",
     "tier.standard.f6": "مراجعة واحدة مشمولة",
 
-    "tier.premium.name": "الباقة_المتميزة",
+    "tier.premium.name": "TIER_03.cfg",
+    "tier.premium.value": "3000 كريدت",
     "tier.premium.desc": "حلول مؤسسية للعمليات الكبيرة",
     "tier.premium.f1": "تطبيقات ويب متكاملة",
     "tier.premium.f2": "أنظمة بوتات معقدة",
@@ -180,7 +184,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.premium.f6": "دعم 90 يوم",
     "tier.premium.f7": "3 مراجعات مشمولة",
 
-    "tier.enterprise.name": "باقة_المؤسسات",
+    "tier.enterprise.name": "TIER_CUSTOM.cfg",
+    "tier.enterprise.value": "مخصص",
     "tier.enterprise.desc": "نطاق غير محدود لأقصى تأثير",
     "tier.enterprise.f1": "تعقيد غير محدود",
     "tier.enterprise.f2": "مطور مخصص",
@@ -192,8 +197,11 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Additional config
     "config.hosting": "الاستضافة_الشهرية",
+    "config.hostingValue": "50 كريدت/شهر",
     "config.rush": "التسليم_العاجل",
+    "config.rushValue": "+50%",
     "config.maintenance": "خطة_الصيانة",
+    "config.maintenanceValue": "100 كريدت/شهر",
     "config.source": "الكود_المصدري",
     "config.docs": "التوثيق",
     "config.consultation": "الاستشارة",
@@ -219,17 +227,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Commands
     "cmd.help": "الأوامر المتاحة:",
-    "cmd.discord": "فتح دعوة سيرفر ديسكورد",
-    "cmd.services": "عرض الخدمات المتاحة",
-    "cmd.quote": "طلب عرض سعر مخصص",
-    "cmd.status": "فحص حالة النظام",
-    "cmd.statusOnline": "حالة النظام: متصل",
-    "cmd.responseTime": "وقت الاستجابة: <ساعتين",
-    "cmd.activeProjects": "المشاريع النشطة: 3",
-    "cmd.queue": "موقع الانتظار: متاح",
-    "cmd.processing": "جارٍ معالجة الطلب...",
-    "cmd.useDiscord": "← استخدم زر ديسكورد أدناه للتواصل المباشر",
-
+    "cmd.unknown": "أمر غير معروف. اكتب 'help' للأوامر المتاحة.",
+    
     // Footer
     "footer.system": "[النظام]",
     "footer.rights": "PHANTOM.DEV © 2026 — جميع الحقوق محفوظة",
@@ -369,7 +368,7 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.modified": "[MODIFIED]",
     "pricing.comment1": "# PHANTOM.DEV PRICING CONFIGURATION",
     "pricing.comment2": "# Last updated:",
-    "pricing.comment3": "# All prices in USD",
+    "pricing.comment3": "# All prices in Discord Credits",
     "pricing.features": "# FEATURES:",
     "pricing.additional": "# ADDITIONAL PARAMETERS",
     "pricing.param": "PARAMETER",
@@ -377,9 +376,11 @@ const translations: Record<Language, Record<string, string>> = {
     "pricing.type": "TYPE",
     "pricing.recommended": "RECOMMENDED",
     "pricing.custom": "Custom quotes available — contact for enterprise pricing",
+    "pricing.probot": "[PAYMENT VIA PROBOT CREDITS]",
 
     // Pricing tiers
-    "tier.basic.name": "TIER_BASIC",
+    "tier.basic.name": "TIER_01.cfg",
+    "tier.basic.value": "500 CREDITS",
     "tier.basic.desc": "Entry-level solutions for small projects",
     "tier.basic.f1": "Simple Discord bots (10-15 commands)",
     "tier.basic.f2": "Basic landing pages",
@@ -387,7 +388,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.basic.f4": "3-day turnaround",
     "tier.basic.f5": "7 days support",
 
-    "tier.standard.name": "TIER_STANDARD",
+    "tier.standard.name": "TIER_02.cfg",
+    "tier.standard.value": "1200 CREDITS",
     "tier.standard.desc": "Professional solutions for growing communities",
     "tier.standard.f1": "Advanced Discord bots (25+ commands)",
     "tier.standard.f2": "Multi-page websites",
@@ -396,7 +398,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.standard.f5": "30 days support",
     "tier.standard.f6": "1 revision included",
 
-    "tier.premium.name": "TIER_PREMIUM",
+    "tier.premium.name": "TIER_03.cfg",
+    "tier.premium.value": "3000 CREDITS",
     "tier.premium.desc": "Enterprise-grade solutions for large operations",
     "tier.premium.f1": "Full-stack web applications",
     "tier.premium.f2": "Complex bot ecosystems",
@@ -406,7 +409,8 @@ const translations: Record<Language, Record<string, string>> = {
     "tier.premium.f6": "90 days support",
     "tier.premium.f7": "3 revisions included",
 
-    "tier.enterprise.name": "TIER_ENTERPRISE",
+    "tier.enterprise.name": "TIER_CUSTOM.cfg",
+    "tier.enterprise.value": "CUSTOM",
     "tier.enterprise.desc": "Unlimited scope for maximum impact",
     "tier.enterprise.f1": "Unlimited complexity",
     "tier.enterprise.f2": "Dedicated developer",
@@ -418,8 +422,11 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Additional config
     "config.hosting": "HOSTING_MONTHLY",
+    "config.hostingValue": "50 CREDITS/mo",
     "config.rush": "RUSH_DELIVERY",
+    "config.rushValue": "+50%",
     "config.maintenance": "MAINTENANCE_PLAN",
+    "config.maintenanceValue": "100 CREDITS/mo",
     "config.source": "SOURCE_CODE",
     "config.docs": "DOCUMENTATION",
     "config.consultation": "CONSULTATION",
@@ -445,16 +452,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Commands
     "cmd.help": "Available commands:",
-    "cmd.discord": "Open Discord server invite",
-    "cmd.services": "View available services",
-    "cmd.quote": "Request a custom quote",
-    "cmd.status": "Check system status",
-    "cmd.statusOnline": "SYSTEM STATUS: ONLINE",
-    "cmd.responseTime": "Response Time: <2 hours",
-    "cmd.activeProjects": "Active Projects: 3",
-    "cmd.queue": "Queue Position: Available",
-    "cmd.processing": "Processing request...",
-    "cmd.useDiscord": "→ Use the Discord button below to connect directly",
+    "cmd.unknown": "Unknown command. Type 'help' for available commands.",
 
     // Footer
     "footer.system": "[SYSTEM]",

@@ -71,7 +71,7 @@ export function ServicesDirectory() {
   ];
 
   return (
-    <div dir={dir} className="min-h-screen py-20 px-6">
+    <div dir={dir} className="min-h-screen py-20 px-6 section-animate">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">

@@ -116,7 +116,7 @@ export function ClassifiedProjects() {
   };
 
   return (
-    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30">
+    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30 section-animate">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">

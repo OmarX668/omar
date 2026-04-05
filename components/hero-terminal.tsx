@@ -34,7 +34,7 @@ export function HeroTerminal() {
   ];
 
   return (
-    <div dir={dir} className="min-h-screen flex flex-col items-center justify-center px-6 pt-20">
+    <div dir={dir} className="min-h-screen flex flex-col items-center justify-center px-6 pt-20 section-animate">
       {/* Terminal Window */}
       <div className="w-full max-w-4xl">
         {/* Terminal Header */}
