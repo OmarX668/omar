@@ -1,0 +1,233 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* PHANTOM.DEV - Secret OS Terminal Theme */
+:root {
+  --background: #000000;
+  --foreground: #F0F0F0;
+  --card: #0a0a0a;
+  --card-foreground: #F0F0F0;
+  --popover: #000000;
+  --popover-foreground: #F0F0F0;
+  --primary: #00FF41;
+  --primary-foreground: #000000;
+  --secondary: #0d1f0f;
+  --secondary-foreground: #00FF41;
+  --muted: #111111;
+  --muted-foreground: #666666;
+  --accent: #00FF41;
+  --accent-foreground: #000000;
+  --destructive: #ff0040;
+  --destructive-foreground: #000000;
+  --border: #1a1a1a;
+  --input: #0a0a0a;
+  --ring: #00FF41;
+  --radius: 0;
+}
+
+@theme inline {
+  --font-sans: var(--font-mono);
+  --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Scanline overlay effect */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 255, 65, 0.03) 1px,
+    rgba(0, 255, 65, 0.03) 2px
+  );
+}
+
+/* Screen flicker animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.97; }
+  15% { opacity: 0.94; }
+  20% { opacity: 0.98; }
+  50% { opacity: 0.96; }
+  80% { opacity: 0.97; }
+  90% { opacity: 0.94; }
+  100% { opacity: 0.98; }
+}
+
+.screen-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+/* Cursor blink animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '█';
+  animation: blink 1s infinite;
+  color: #00FF41;
+}
+
+/* Typing animation */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+/* Glitch effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: -2px 0 #ff0040, 2px 0 #00FF41;
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    text-shadow: 2px 0 #ff0040, -2px 0 #00FF41;
+  }
+  40% {
+    transform: translate(-2px, -2px);
+    text-shadow: 2px 0 #00FF41, -2px 0 #ff0040;
+  }
+  60% {
+    transform: translate(2px, 2px);
+    text-shadow: -2px 0 #00FF41, 2px 0 #ff0040;
+  }
+  80% {
+    transform: translate(2px, -2px);
+    text-shadow: 2px 0 #ff0040, -2px 0 #00FF41;
+  }
+  100% {
+    transform: translate(0);
+    text-shadow: -2px 0 #ff0040, 2px 0 #00FF41;
+  }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Green glow effect */
+.glow-green {
+  box-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, 0 0 20px rgba(0, 255, 65, 0.5);
+}
+
+.glow-green-text {
+  text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41, 0 0 20px rgba(0, 255, 65, 0.5);
+}
+
+/* Redacted text effect */
+.redacted {
+  background: #F0F0F0;
+  color: transparent;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.redacted:hover {
+  background: transparent;
+  color: #00FF41;
+  text-shadow: 0 0 10px #00FF41;
+}
+
+/* Loading bar animation */
+@keyframes load {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.loading-bar {
+  height: 2px;
+  background: #00FF41;
+  box-shadow: 0 0 10px #00FF41;
+}
+
+/* CRT screen curve effect */
+.crt-curve {
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+/* Terminal scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00FF41;
+  border: 1px solid #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00cc33;
+}
+
+/* Selection color */
+::selection {
+  background: #00FF41;
+  color: #000000;
+}
