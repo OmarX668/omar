@@ -177,44 +177,6 @@ function BootSequence() {
     </div>
   );
 }
-    }, 150);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div dir={dir} className="fixed inset-0 bg-black z-50 flex items-center justify-center p-6">
-      <div className="max-w-2xl w-full">
-        <div className="font-mono text-sm md:text-base">
-          {lines.map((line, i) => {
-            const text = line ?? "";
-            const isOk = text.includes("[OK]") || text.includes("[تم]");
-            const isAccess = text.includes("ACCESS") || text.includes("الوصول") || text.includes("WELCOME") || text.includes("مرحباً");
-            const isAscii = text.includes("█") || text.includes("╔") || text.includes("║") || text.includes("╚");
-            
-            return (
-              <div
-                key={i}
-                className={`${
-                  isOk
-                    ? "text-primary"
-                    : isAccess
-                    ? "text-primary glow-green-text"
-                    : isAscii
-                    ? "text-primary"
-                    : "text-muted-foreground"
-                } ${isAccess ? "text-lg md:text-xl mt-2" : ""}`}
-              >
-                {text || "\u00A0"}
-              </div>
-            );
-          })}
-          <span className="inline-block w-3 h-5 bg-primary animate-pulse ms-1" />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function PhantomOS() {
   return (
