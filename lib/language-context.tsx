@@ -456,7 +456,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Footer
     "footer.system": "[SYSTEM]",
-    "footer.rights": "DOBLEX.DEV © 2026 — ALL RIGHTS RESERVED",,
+    "footer.rights": "DOBLEX.DEV © 2026 — ALL RIGHTS RESERVED",
     "footer.session": "SESSION:",
 
     // Language toggle
