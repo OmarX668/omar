@@ -1,94 +1,92 @@
 "use client";
 
 import { useState } from "react";
-
-interface PricingTier {
-  param: string;
-  value: string;
-  description: string;
-  features: string[];
-  recommended?: boolean;
-}
-
-const pricingConfig: PricingTier[] = [
-  {
-    param: "TIER_BASIC",
-    value: "$50-150",
-    description: "Entry-level solutions for small projects",
-    features: [
-      "Simple Discord bots (10-15 commands)",
-      "Basic landing pages",
-      "Single-feature scripts",
-      "3-day turnaround",
-      "7 days support",
-    ],
-  },
-  {
-    param: "TIER_STANDARD",
-    value: "$150-500",
-    description: "Professional solutions for growing communities",
-    features: [
-      "Advanced Discord bots (25+ commands)",
-      "Multi-page websites",
-      "Database integration",
-      "7-14 day turnaround",
-      "30 days support",
-      "1 revision included",
-    ],
-    recommended: true,
-  },
-  {
-    param: "TIER_PREMIUM",
-    value: "$500-1500",
-    description: "Enterprise-grade solutions for large operations",
-    features: [
-      "Full-stack web applications",
-      "Complex bot ecosystems",
-      "Custom API development",
-      "Scalable architecture",
-      "14-30 day turnaround",
-      "90 days support",
-      "3 revisions included",
-    ],
-  },
-  {
-    param: "TIER_ENTERPRISE",
-    value: "CUSTOM",
-    description: "Unlimited scope for maximum impact",
-    features: [
-      "Unlimited complexity",
-      "Dedicated developer",
-      "Priority queue",
-      "Flexible timeline",
-      "Extended support",
-      "Unlimited revisions",
-      "NDA available",
-    ],
-  },
-];
-
-const additionalConfig = [
-  { param: "HOSTING_MONTHLY", value: "$5-25", type: "string" },
-  { param: "RUSH_DELIVERY", value: "+50%", type: "modifier" },
-  { param: "MAINTENANCE_PLAN", value: "$25-100/mo", type: "string" },
-  { param: "SOURCE_CODE", value: "INCLUDED", type: "boolean" },
-  { param: "DOCUMENTATION", value: "INCLUDED", type: "boolean" },
-  { param: "CONSULTATION", value: "FREE", type: "boolean" },
-];
+import { useLanguage } from "@/lib/language-context";
 
 export function SystemConfigPricing() {
-  const [selectedTier, setSelectedTier] = useState<string>("TIER_STANDARD");
+  const [selectedTier, setSelectedTier] = useState<string>("standard");
+  const { t, dir } = useLanguage();
+
+  const pricingConfig = [
+    {
+      id: "basic",
+      paramKey: "tier.basic.name",
+      value: "$50-150",
+      descKey: "tier.basic.desc",
+      featureKeys: [
+        "tier.basic.f1",
+        "tier.basic.f2",
+        "tier.basic.f3",
+        "tier.basic.f4",
+        "tier.basic.f5",
+      ],
+    },
+    {
+      id: "standard",
+      paramKey: "tier.standard.name",
+      value: "$150-500",
+      descKey: "tier.standard.desc",
+      featureKeys: [
+        "tier.standard.f1",
+        "tier.standard.f2",
+        "tier.standard.f3",
+        "tier.standard.f4",
+        "tier.standard.f5",
+        "tier.standard.f6",
+      ],
+      recommended: true,
+    },
+    {
+      id: "premium",
+      paramKey: "tier.premium.name",
+      value: "$500-1500",
+      descKey: "tier.premium.desc",
+      featureKeys: [
+        "tier.premium.f1",
+        "tier.premium.f2",
+        "tier.premium.f3",
+        "tier.premium.f4",
+        "tier.premium.f5",
+        "tier.premium.f6",
+        "tier.premium.f7",
+      ],
+    },
+    {
+      id: "enterprise",
+      paramKey: "tier.enterprise.name",
+      value: t("config.consultation") === "مجاني" ? "مخصص" : "CUSTOM",
+      descKey: "tier.enterprise.desc",
+      featureKeys: [
+        "tier.enterprise.f1",
+        "tier.enterprise.f2",
+        "tier.enterprise.f3",
+        "tier.enterprise.f4",
+        "tier.enterprise.f5",
+        "tier.enterprise.f6",
+        "tier.enterprise.f7",
+      ],
+    },
+  ];
+
+  const additionalConfig = [
+    { paramKey: "config.hosting", value: "$5-25", type: "string" },
+    { paramKey: "config.rush", value: "+50%", type: "modifier" },
+    { paramKey: "config.maintenance", value: "$25-100/mo", type: "string" },
+    { paramKey: "config.source", valueKey: "config.included", type: "boolean" },
+    { paramKey: "config.docs", valueKey: "config.included", type: "boolean" },
+    { paramKey: "config.consultation", valueKey: "config.free", type: "boolean" },
+  ];
 
   return (
-    <div className="min-h-screen py-20 px-6">
+    <div dir={dir} className="min-h-screen py-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
           <p className="text-primary text-sm mb-2">
-            phantom@config:~$ nano /etc/phantom/pricing.conf
+            {t("pricing.prompt")}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground glitch-hover inline-block cursor-blink">
-            SYSTEM CONFIGURATION
+            {t("pricing.title")}
           </h2>
         </div>
 
@@ -97,46 +95,46 @@ export function SystemConfigPricing() {
           {/* File Header */}
           <div className="px-4 py-2 bg-muted border-b border-border flex items-center justify-between">
             <span className="text-sm text-muted-foreground">
-              /etc/phantom/pricing.conf
+              {t("pricing.file")}
             </span>
-            <span className="text-xs text-primary">[MODIFIED]</span>
+            <span className="text-xs text-primary">{t("pricing.modified")}</span>
           </div>
 
           {/* Config Content */}
           <div className="p-4 md:p-6">
             <div className="text-muted-foreground text-sm mb-6">
-              # PHANTOM.DEV PRICING CONFIGURATION
+              {t("pricing.comment1")}
               <br />
-              # Last updated: {new Date().toISOString().split("T")[0]}
+              {t("pricing.comment2")} {new Date().toISOString().split("T")[0]}
               <br />
-              # All prices in USD
+              {t("pricing.comment3")}
             </div>
 
             {/* Pricing Tiers Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {pricingConfig.map((tier) => (
                 <button
-                  key={tier.param}
-                  onClick={() => setSelectedTier(tier.param)}
-                  className={`text-left p-4 border transition-all duration-300 ${
-                    selectedTier === tier.param
+                  key={tier.id}
+                  onClick={() => setSelectedTier(tier.id)}
+                  className={`text-start p-4 border transition-all duration-300 ${
+                    selectedTier === tier.id
                       ? "border-primary bg-primary/10"
                       : "border-border hover:border-primary/50"
                   } ${tier.recommended ? "relative" : ""}`}
                 >
                   {tier.recommended && (
-                    <span className="absolute -top-3 left-4 px-2 py-0.5 bg-primary text-primary-foreground text-xs">
-                      RECOMMENDED
+                    <span className="absolute -top-3 start-4 px-2 py-0.5 bg-primary text-primary-foreground text-xs">
+                      {t("pricing.recommended")}
                     </span>
                   )}
                   <div className="text-xs text-muted-foreground mb-1">
-                    {tier.param}=
+                    {t(tier.paramKey)}=
                   </div>
                   <div className="text-2xl font-bold text-primary mb-2">
                     {tier.value}
                   </div>
                   <div className="text-sm text-foreground">
-                    {tier.description}
+                    {t(tier.descKey)}
                   </div>
                 </button>
               ))}
@@ -145,15 +143,15 @@ export function SystemConfigPricing() {
             {/* Selected Tier Features */}
             <div className="border border-border p-4 bg-black/50">
               <div className="text-sm text-primary mb-4">
-                # {selectedTier} FEATURES:
+                {t("pricing.features")} {t(pricingConfig.find((t) => t.id === selectedTier)?.paramKey || "")}
               </div>
               <div className="grid md:grid-cols-2 gap-2">
                 {pricingConfig
-                  .find((t) => t.param === selectedTier)
-                  ?.features.map((feature, i) => (
+                  .find((tier) => tier.id === selectedTier)
+                  ?.featureKeys.map((key, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm">
                       <span className="text-primary">✓</span>
-                      <span className="text-foreground">{feature}</span>
+                      <span className="text-foreground">{t(key)}</span>
                     </div>
                   ))}
               </div>
@@ -165,30 +163,32 @@ export function SystemConfigPricing() {
         <div className="border border-border bg-card">
           <div className="px-4 py-2 bg-muted border-b border-border">
             <span className="text-sm text-muted-foreground">
-              # ADDITIONAL PARAMETERS
+              {t("pricing.additional")}
             </span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left px-4 py-3 text-primary">PARAMETER</th>
-                  <th className="text-left px-4 py-3 text-primary">VALUE</th>
-                  <th className="text-left px-4 py-3 text-primary hidden md:table-cell">
-                    TYPE
+                  <th className="text-start px-4 py-3 text-primary">{t("pricing.param")}</th>
+                  <th className="text-start px-4 py-3 text-primary">{t("pricing.value")}</th>
+                  <th className="text-start px-4 py-3 text-primary hidden md:table-cell">
+                    {t("pricing.type")}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {additionalConfig.map((config) => (
                   <tr
-                    key={config.param}
+                    key={config.paramKey}
                     className="border-b border-border/50 hover:bg-primary/5 transition-colors"
                   >
                     <td className="px-4 py-3 text-foreground font-mono">
-                      {config.param}
+                      {t(config.paramKey)}
                     </td>
-                    <td className="px-4 py-3 text-primary">{config.value}</td>
+                    <td className="px-4 py-3 text-primary">
+                      {config.valueKey ? t(config.valueKey) : config.value}
+                    </td>
                     <td className="px-4 py-3 text-muted-foreground hidden md:table-cell">
                       {config.type}
                     </td>
@@ -202,8 +202,8 @@ export function SystemConfigPricing() {
         {/* Terminal prompt */}
         <div className="mt-8 text-muted-foreground text-sm">
           <span className="text-primary">phantom@config:~$</span> echo
-          &quot;Custom quotes available — contact for enterprise pricing&quot;
-          <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />
+          &quot;{t("pricing.custom")}&quot;
+          <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>
       </div>
     </div>

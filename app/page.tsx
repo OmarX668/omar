@@ -7,12 +7,14 @@ import { ClassifiedProjects } from "@/components/classified-projects";
 import { SystemConfigPricing } from "@/components/system-config-pricing";
 import { CommandContact } from "@/components/command-contact";
 import { SystemNav } from "@/components/system-nav";
+import { LanguageProvider, useLanguage } from "@/lib/language-context";
 
-export default function PhantomOS() {
+function PhantomOSContent() {
   const [bootComplete, setBootComplete] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [loadingSection, setLoadingSection] = useState<string | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const { dir, t } = useLanguage();
 
   useEffect(() => {
     const bootTimer = setTimeout(() => {
@@ -46,7 +48,7 @@ export default function PhantomOS() {
   }, [showContent]);
 
   return (
-    <main className="min-h-screen bg-black text-foreground relative overflow-x-hidden">
+    <main dir={dir} className="min-h-screen bg-black text-foreground relative overflow-x-hidden transition-all duration-300">
       {/* Scanline Overlay */}
       <div className="scanlines" />
       
@@ -91,10 +93,10 @@ export default function PhantomOS() {
             <footer className="border-t border-border py-8 px-6">
               <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                 <p className="text-muted-foreground text-sm">
-                  <span className="text-primary">[SYSTEM]</span> PHANTOM.DEV © 2026 — ALL RIGHTS RESERVED
+                  <span className="text-primary">{t("footer.system")}</span> {t("footer.rights")}
                 </p>
                 <p className="text-muted-foreground text-sm">
-                  <span className="text-primary">SESSION:</span> {Math.random().toString(36).substring(2, 10).toUpperCase()}
+                  <span className="text-primary">{t("footer.session")}</span> {Math.random().toString(36).substring(2, 10).toUpperCase()}
                 </p>
               </div>
             </footer>
@@ -107,14 +109,16 @@ export default function PhantomOS() {
 
 function BootSequence() {
   const [lines, setLines] = useState<string[]>([]);
+  const { t, dir } = useLanguage();
+  
   const bootLines = [
-    "PHANTOM.DEV KERNEL v4.2.0",
-    "Initializing secure connection...",
-    "Loading cryptographic modules.......... [OK]",
-    "Establishing encrypted tunnel.......... [OK]",
-    "Bypassing firewall protocols........... [OK]",
-    "Verifying clearance level.............. [OK]",
-    "Decrypting classified database......... [OK]",
+    t("boot.kernel"),
+    t("boot.init"),
+    t("boot.crypto"),
+    t("boot.tunnel"),
+    t("boot.firewall"),
+    t("boot.clearance"),
+    t("boot.decrypt"),
     "",
     "╔══════════════════════════════════════════╗",
     "║                                          ║",
@@ -125,8 +129,8 @@ function BootSequence() {
     "║                                          ║",
     "╚══════════════════════════════════════════╝",
     "",
-    "> ACCESS GRANTED",
-    "> WELCOME, OPERATOR",
+    t("boot.access"),
+    t("boot.welcome"),
   ];
 
   useEffect(() => {
@@ -144,31 +148,43 @@ function BootSequence() {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black z-50 flex items-center justify-center p-6">
+    <div dir={dir} className="fixed inset-0 bg-black z-50 flex items-center justify-center p-6">
       <div className="max-w-2xl w-full">
         <div className="font-mono text-sm md:text-base">
           {lines.map((line, i) => {
             const text = line ?? "";
+            const isOk = text.includes("[OK]") || text.includes("[تم]");
+            const isAccess = text.includes("ACCESS") || text.includes("الوصول") || text.includes("WELCOME") || text.includes("مرحباً");
+            const isAscii = text.includes("█") || text.includes("╔") || text.includes("║") || text.includes("╚");
+            
             return (
               <div
                 key={i}
                 className={`${
-                  text.includes("[OK]")
+                  isOk
                     ? "text-primary"
-                    : text.includes("ACCESS GRANTED") || text.includes("WELCOME")
+                    : isAccess
                     ? "text-primary glow-green-text"
-                    : text.includes("█") || text.includes("╔") || text.includes("║") || text.includes("╚")
+                    : isAscii
                     ? "text-primary"
                     : "text-muted-foreground"
-                } ${text.includes("ACCESS") ? "text-lg md:text-xl mt-2" : ""}`}
+                } ${isAccess ? "text-lg md:text-xl mt-2" : ""}`}
               >
                 {text || "\u00A0"}
               </div>
             );
           })}
-          <span className="inline-block w-3 h-5 bg-primary animate-pulse ml-1" />
+          <span className="inline-block w-3 h-5 bg-primary animate-pulse ms-1" />
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PhantomOS() {
+  return (
+    <LanguageProvider>
+      <PhantomOSContent />
+    </LanguageProvider>
   );
 }

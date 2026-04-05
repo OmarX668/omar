@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -8,9 +8,15 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono'
 });
 
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: '--font-arabic'
+});
+
 export const metadata: Metadata = {
-  title: 'PHANTOM.DEV // CLASSIFIED SYSTEM',
-  description: 'Elite programming services. Discord bots, websites, custom development. Access granted.',
+  title: 'PHANTOM.DEV // نظام سري',
+  description: 'خدمات برمجة متقدمة. بوتات ديسكورد، مواقع، تطوير مخصص. تم منح الوصول.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -38,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} font-mono antialiased`}>
+      <body className={`${jetbrainsMono.variable} ${ibmPlexArabic.variable} font-mono antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

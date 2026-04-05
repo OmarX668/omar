@@ -1,105 +1,133 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 interface Project {
   id: string;
-  codename: string;
+  codenameKey: string;
   classification: "TOP SECRET" | "SECRET" | "CONFIDENTIAL";
-  type: string;
-  client: string;
+  typeKey: string;
+  clientKey: string;
   status: "COMPLETED" | "ACTIVE" | "ARCHIVED";
-  description: string;
+  descKey: string;
   tech: string[];
 }
-
-const projects: Project[] = [
-  {
-    id: "PRJ-001",
-    codename: "OPERATION SHADOWBOT",
-    classification: "TOP SECRET",
-    type: "Discord Bot",
-    client: "[REDACTED] Gaming Community",
-    status: "COMPLETED",
-    description: "Advanced moderation bot with AI-powered content filtering, custom economy system, and role management for 50,000+ member server.",
-    tech: ["Discord.js", "MongoDB", "OpenAI API", "Redis"],
-  },
-  {
-    id: "PRJ-002",
-    codename: "PROJECT NEXUS",
-    classification: "SECRET",
-    type: "Web Application",
-    client: "Tech Startup [CLASSIFIED]",
-    status: "COMPLETED",
-    description: "Full-stack SaaS platform with real-time collaboration features, subscription management, and advanced analytics dashboard.",
-    tech: ["Next.js", "PostgreSQL", "Stripe", "WebSockets"],
-  },
-  {
-    id: "PRJ-003",
-    codename: "CIPHER NETWORK",
-    classification: "TOP SECRET",
-    type: "Custom Solution",
-    client: "[DATA EXPUNGED]",
-    status: "ACTIVE",
-    description: "Automated trading signal distribution system with encrypted channels and real-time market data integration.",
-    tech: ["Python", "Discord API", "TradingView", "AWS Lambda"],
-  },
-  {
-    id: "PRJ-004",
-    codename: "ECHO CHAMBER",
-    classification: "CONFIDENTIAL",
-    type: "Discord Bot",
-    client: "Music Community Network",
-    status: "COMPLETED",
-    description: "High-fidelity music bot with multi-server support, playlist management, and Spotify/YouTube integration.",
-    tech: ["Discord.js", "Lavalink", "Spotify API", "Docker"],
-  },
-  {
-    id: "PRJ-005",
-    codename: "VANGUARD PORTAL",
-    classification: "SECRET",
-    type: "Web Application",
-    client: "E-Sports Organization",
-    status: "COMPLETED",
-    description: "Tournament management platform with bracket generation, live scoring, and Discord integration for announcements.",
-    tech: ["React", "Node.js", "Socket.io", "Discord Webhooks"],
-  },
-  {
-    id: "PRJ-006",
-    codename: "PHANTOM CORE",
-    classification: "TOP SECRET",
-    type: "Custom Solution",
-    client: "[LEVEL 5 CLEARANCE REQUIRED]",
-    status: "ARCHIVED",
-    description: "Internal server infrastructure with automated deployment pipelines, monitoring dashboards, and incident response systems.",
-    tech: ["Kubernetes", "Grafana", "Prometheus", "Terraform"],
-  },
-];
 
 export function ClassifiedProjects() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("ALL");
+  const { t, dir, language } = useLanguage();
+
+  const projects: Project[] = [
+    {
+      id: "PRJ-001",
+      codenameKey: "project.1.codename",
+      classification: "TOP SECRET",
+      typeKey: "projects.bots",
+      clientKey: "project.1.client",
+      status: "COMPLETED",
+      descKey: "project.1.desc",
+      tech: ["Discord.js", "MongoDB", "OpenAI API", "Redis"],
+    },
+    {
+      id: "PRJ-002",
+      codenameKey: "project.2.codename",
+      classification: "SECRET",
+      typeKey: "projects.web",
+      clientKey: "project.2.client",
+      status: "COMPLETED",
+      descKey: "project.2.desc",
+      tech: ["Next.js", "PostgreSQL", "Stripe", "WebSockets"],
+    },
+    {
+      id: "PRJ-003",
+      codenameKey: "project.3.codename",
+      classification: "TOP SECRET",
+      typeKey: "projects.custom",
+      clientKey: "project.3.client",
+      status: "ACTIVE",
+      descKey: "project.3.desc",
+      tech: ["Python", "Discord API", "TradingView", "AWS Lambda"],
+    },
+    {
+      id: "PRJ-004",
+      codenameKey: "project.4.codename",
+      classification: "CONFIDENTIAL",
+      typeKey: "projects.bots",
+      clientKey: "project.4.client",
+      status: "COMPLETED",
+      descKey: "project.4.desc",
+      tech: ["Discord.js", "Lavalink", "Spotify API", "Docker"],
+    },
+    {
+      id: "PRJ-005",
+      codenameKey: "project.5.codename",
+      classification: "SECRET",
+      typeKey: "projects.web",
+      clientKey: "project.5.client",
+      status: "COMPLETED",
+      descKey: "project.5.desc",
+      tech: ["React", "Node.js", "Socket.io", "Discord Webhooks"],
+    },
+    {
+      id: "PRJ-006",
+      codenameKey: "project.6.codename",
+      classification: "TOP SECRET",
+      typeKey: "projects.custom",
+      clientKey: "project.6.client",
+      status: "ARCHIVED",
+      descKey: "project.6.desc",
+      tech: ["Kubernetes", "Grafana", "Prometheus", "Terraform"],
+    },
+  ];
+
+  const types = [
+    { key: "ALL", label: t("projects.all") },
+    { key: "projects.bots", label: t("projects.bots") },
+    { key: "projects.web", label: t("projects.web") },
+    { key: "projects.custom", label: t("projects.custom") },
+  ];
 
   const filteredProjects =
     filter === "ALL"
       ? projects
-      : projects.filter((p) => p.type === filter);
+      : projects.filter((p) => p.typeKey === filter);
 
-  const types = ["ALL", "Discord Bot", "Web Application", "Custom Solution"];
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "COMPLETED": return t("projects.completed");
+      case "ACTIVE": return t("projects.active");
+      case "ARCHIVED": return t("projects.archived");
+      default: return status;
+    }
+  };
+
+  const getClassificationText = (classification: string) => {
+    if (language === "ar") {
+      switch (classification) {
+        case "TOP SECRET": return "سري للغاية";
+        case "SECRET": return "سري";
+        case "CONFIDENTIAL": return "سري نسبياً";
+        default: return classification;
+      }
+    }
+    return classification;
+  };
 
   return (
-    <div className="min-h-screen py-20 px-6 bg-muted/30">
+    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
           <p className="text-primary text-sm mb-2">
-            phantom@classified:~$ cat /var/projects/*.log
+            {t("projects.prompt")}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground glitch-hover inline-block cursor-blink">
-            CLASSIFIED FILES
+            {t("projects.title")}
           </h2>
           <p className="text-muted-foreground mt-2">
-            <span className="text-destructive">[WARNING]</span> Hover to decrypt sensitive information
+            <span className="text-destructive">[{language === "ar" ? "تحذير" : "WARNING"}]</span> {t("projects.warning")}
           </p>
         </div>
 
@@ -107,15 +135,15 @@ export function ClassifiedProjects() {
         <div className="flex flex-wrap gap-2 mb-8">
           {types.map((type) => (
             <button
-              key={type}
-              onClick={() => setFilter(type)}
+              key={type.key}
+              onClick={() => setFilter(type.key)}
               className={`px-4 py-2 text-sm border transition-all ${
-                filter === type
+                filter === type.key
                   ? "border-primary text-primary bg-primary/10"
                   : "border-border text-muted-foreground hover:border-primary/50 hover:text-primary"
               }`}
             >
-              {type === "ALL" ? "// ALL FILES" : `// ${type.toUpperCase()}`}
+              {type.label}
             </button>
           ))}
         </div>
@@ -142,7 +170,7 @@ export function ClassifiedProjects() {
                         : "bg-primary/20 text-primary border border-primary/50"
                     }`}
                   >
-                    {project.classification}
+                    {getClassificationText(project.classification)}
                   </span>
                 </div>
                 <span
@@ -154,20 +182,20 @@ export function ClassifiedProjects() {
                       : "text-muted-foreground"
                   }`}
                 >
-                  [{project.status}]
+                  [{getStatusText(project.status)}]
                 </span>
               </div>
 
               {/* Card Body */}
               <div className="p-4">
                 <h3 className="text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                  {project.codename}
+                  {t(project.codenameKey)}
                 </h3>
-                <p className="text-primary text-sm mb-3">{project.type}</p>
+                <p className="text-primary text-sm mb-3">{t(project.typeKey).replace("// ", "")}</p>
 
                 {/* Client - Redacted */}
                 <div className="mb-3">
-                  <span className="text-muted-foreground text-sm">Client: </span>
+                  <span className="text-muted-foreground text-sm">{t("projects.client")}</span>
                   <span
                     className={`text-sm transition-all duration-300 ${
                       hoveredId === project.id
@@ -175,7 +203,7 @@ export function ClassifiedProjects() {
                         : "bg-foreground text-transparent select-none"
                     }`}
                   >
-                    {project.client}
+                    {t(project.clientKey)}
                   </span>
                 </div>
 
@@ -191,7 +219,7 @@ export function ClassifiedProjects() {
                       backgroundSize: hoveredId === project.id ? "0" : "100%",
                     }}
                   >
-                    {project.description}
+                    {t(project.descKey)}
                   </p>
                 </div>
 
@@ -216,13 +244,13 @@ export function ClassifiedProjects() {
               <div className="px-4 py-2 border-t border-border text-xs text-muted-foreground">
                 {hoveredId === project.id ? (
                   <span className="text-primary">
-                    <span className="inline-block w-2 h-2 bg-primary rounded-full mr-2 animate-pulse" />
-                    DECRYPTED
+                    <span className="inline-block w-2 h-2 bg-primary rounded-full me-2 animate-pulse" />
+                    {t("projects.decrypted")}
                   </span>
                 ) : (
                   <span>
-                    <LockIcon className="inline w-3 h-3 mr-2" />
-                    ENCRYPTED — HOVER TO DECRYPT
+                    <LockIcon className="inline w-3 h-3 me-2" />
+                    {t("projects.encrypted")}
                   </span>
                 )}
               </div>
@@ -232,8 +260,8 @@ export function ClassifiedProjects() {
 
         {/* Terminal prompt */}
         <div className="mt-10 text-muted-foreground text-sm">
-          <span className="text-primary">phantom@classified:~$</span> echo &quot;More projects available upon clearance verification&quot;
-          <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />
+          <span className="text-primary">phantom@classified:~$</span> echo &quot;{t("projects.more")}&quot;
+          <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>
       </div>
     </div>

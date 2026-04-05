@@ -1,18 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 export function CommandContact() {
   const [inputValue, setInputValue] = useState("");
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [showResponse, setShowResponse] = useState(false);
+  const [commandHistory, setCommandHistory] = useState<{ cmd: string; type: string }[]>([]);
+  const { t, dir, language } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      setCommandHistory([...commandHistory, inputValue]);
+      const cmd = inputValue.toLowerCase().trim();
+      let type = "unknown";
+      if (cmd === "help" || cmd === "مساعدة") type = "help";
+      else if (cmd === "status" || cmd === "الحالة") type = "status";
+      setCommandHistory([...commandHistory, { cmd: inputValue, type }]);
       setInputValue("");
-      setShowResponse(true);
     }
   };
 
@@ -25,15 +29,15 @@ export function CommandContact() {
   }, []);
 
   return (
-    <div className="min-h-screen py-20 px-6 bg-muted/30">
+    <div dir={dir} className="min-h-screen py-20 px-6 bg-muted/30">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
           <p className="text-primary text-sm mb-2">
-            phantom@connect:~$ ./initiate_contact.sh
+            {t("contact.prompt")}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground glitch-hover inline-block cursor-blink">
-            ESTABLISH CONNECTION
+            {t("contact.title")}
           </h2>
         </div>
 
@@ -46,7 +50,7 @@ export function CommandContact() {
               <span className="w-3 h-3 rounded-full bg-yellow-500" />
               <span className="w-3 h-3 rounded-full bg-primary" />
             </div>
-            <span className="text-muted-foreground text-sm ml-4">
+            <span className="text-muted-foreground text-sm ms-4">
               phantom@secure-channel — bash
             </span>
           </div>
@@ -55,70 +59,58 @@ export function CommandContact() {
           <div className="p-6 min-h-[400px]">
             {/* Welcome Message */}
             <div className="mb-6 text-sm">
-              <p className="text-primary">
-                ╔══════════════════════════════════════════════════════╗
-              </p>
-              <p className="text-primary">
-                ║ PHANTOM.DEV SECURE COMMUNICATION CHANNEL             ║
-              </p>
-              <p className="text-primary">
-                ║ Type &apos;help&apos; for available commands                    ║
-              </p>
-              <p className="text-primary">
-                ╚══════════════════════════════════════════════════════╝
-              </p>
+              <p className="text-primary">{t("contact.header1")}</p>
+              <p className="text-primary">{t("contact.header2")}</p>
+              <p className="text-primary">{t("contact.header3")}</p>
+              <p className="text-primary">{t("contact.header4")}</p>
             </div>
 
             {/* Command History */}
-            {commandHistory.map((cmd, i) => (
+            {commandHistory.map((item, i) => (
               <div key={i} className="mb-4 text-sm">
                 <p>
                   <span className="text-primary">phantom@connect:~$</span>{" "}
-                  <span className="text-foreground">{cmd}</span>
+                  <span className="text-foreground">{item.cmd}</span>
                 </p>
-                {cmd.toLowerCase() === "help" && (
-                  <div className="mt-2 text-muted-foreground pl-4">
-                    <p>Available commands:</p>
+                {item.type === "help" && (
+                  <div className={`mt-2 text-muted-foreground ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
+                    <p>{t("cmd.help")}</p>
                     <p className="text-primary">  discord   </p>
-                    <p className="text-muted-foreground">    - Open Discord server invite</p>
+                    <p className="text-muted-foreground">    - {t("cmd.discord")}</p>
                     <p className="text-primary">  services  </p>
-                    <p className="text-muted-foreground">    - View available services</p>
+                    <p className="text-muted-foreground">    - {t("cmd.services")}</p>
                     <p className="text-primary">  quote     </p>
-                    <p className="text-muted-foreground">    - Request a custom quote</p>
+                    <p className="text-muted-foreground">    - {t("cmd.quote")}</p>
                     <p className="text-primary">  status    </p>
-                    <p className="text-muted-foreground">    - Check system status</p>
+                    <p className="text-muted-foreground">    - {t("cmd.status")}</p>
                   </div>
                 )}
-                {cmd.toLowerCase() === "status" && (
-                  <div className="mt-2 pl-4">
-                    <p className="text-primary">SYSTEM STATUS: ONLINE</p>
-                    <p className="text-muted-foreground">Response Time: {"<"}2 hours</p>
-                    <p className="text-muted-foreground">Active Projects: 3</p>
-                    <p className="text-muted-foreground">Queue Position: Available</p>
+                {item.type === "status" && (
+                  <div className={`mt-2 ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
+                    <p className="text-primary">{t("cmd.statusOnline")}</p>
+                    <p className="text-muted-foreground">{t("cmd.responseTime")}</p>
+                    <p className="text-muted-foreground">{t("cmd.activeProjects")}</p>
+                    <p className="text-muted-foreground">{t("cmd.queue")}</p>
+                  </div>
+                )}
+                {item.type === "unknown" && (
+                  <div className={`mt-2 text-muted-foreground ${dir === "rtl" ? "pr-4" : "pl-4"}`}>
+                    <p>{t("cmd.processing")}</p>
+                    <p className="text-primary mt-2">{t("cmd.useDiscord")}</p>
                   </div>
                 )}
               </div>
             ))}
 
-            {showResponse && commandHistory[commandHistory.length - 1]?.toLowerCase() !== "help" && 
-             commandHistory[commandHistory.length - 1]?.toLowerCase() !== "status" && (
-              <div className="mb-4 text-sm text-muted-foreground pl-4">
-                <p>Processing request...</p>
-                <p className="text-primary mt-2">
-                  → Use the Discord button below to connect directly
-                </p>
-              </div>
-            )}
-
             {/* Input Line */}
             <form onSubmit={handleSubmit} className="flex items-center text-sm">
-              <span className="text-primary mr-2">phantom@connect:~$</span>
+              <span className="text-primary me-2">phantom@connect:~$</span>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="flex-1 bg-transparent text-foreground outline-none caret-primary"
-                placeholder="Type a command..."
+                placeholder={t("contact.placeholder")}
                 autoFocus
               />
               <span
@@ -145,10 +137,10 @@ export function CommandContact() {
               </div>
               <div>
                 <p className="text-primary font-bold text-lg glitch-hover">
-                  CONNECT VIA DISCORD →
+                  {t("contact.discord")}
                 </p>
                 <p className="text-muted-foreground text-sm">
-                  Fastest response time
+                  {t("contact.discordSub")}
                 </p>
               </div>
             </div>
@@ -169,10 +161,10 @@ export function CommandContact() {
               </div>
               <div>
                 <p className="text-foreground font-bold text-lg group-hover:text-primary transition-colors">
-                  ENCRYPTED EMAIL
+                  {t("contact.email")}
                 </p>
                 <p className="text-muted-foreground text-sm">
-                  For formal inquiries
+                  {t("contact.emailSub")}
                 </p>
               </div>
             </div>
@@ -187,14 +179,14 @@ export function CommandContact() {
         <div className="mt-8 border border-border p-4 bg-card">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <p className="text-primary text-sm mb-1">EXPECTED RESPONSE TIME</p>
+              <p className="text-primary text-sm mb-1">{t("contact.responseTime")}</p>
               <p className="text-2xl font-bold text-foreground">
-                {"<"} 2 HOURS
+                {t("contact.hours")}
               </p>
             </div>
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 bg-primary rounded-full animate-pulse" />
-              <span className="text-muted-foreground">CURRENTLY ONLINE</span>
+              <span className="text-muted-foreground">{t("contact.currentlyOnline")}</span>
             </div>
           </div>
         </div>
@@ -202,8 +194,8 @@ export function CommandContact() {
         {/* Terminal prompt */}
         <div className="mt-8 text-muted-foreground text-sm">
           <span className="text-primary">phantom@connect:~$</span> echo
-          &quot;Awaiting your transmission...&quot;
-          <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />
+          &quot;{t("contact.awaiting")}&quot;
+          <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>
       </div>
     </div>

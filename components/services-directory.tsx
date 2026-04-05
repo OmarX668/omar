@@ -1,115 +1,116 @@
 "use client";
 
 import { useState } from "react";
-
-interface Service {
-  permissions: string;
-  links: string;
-  owner: string;
-  size: string;
-  date: string;
-  name: string;
-  description: string;
-  features: string[];
-}
-
-const services: Service[] = [
-  {
-    permissions: "drwxr-xr-x",
-    links: "5",
-    owner: "phantom",
-    size: "4.0K",
-    date: "Apr 05",
-    name: "discord-bots/",
-    description: "Custom Discord bots with advanced functionality. Moderation, music, games, AI integration, and more.",
-    features: ["Slash commands", "Custom embeds", "Database integration", "24/7 hosting available"],
-  },
-  {
-    permissions: "drwxr-xr-x",
-    links: "8",
-    owner: "phantom",
-    size: "12K",
-    date: "Apr 05",
-    name: "web-development/",
-    description: "Full-stack web applications. Modern frameworks, responsive design, optimized performance.",
-    features: ["React/Next.js", "Node.js backends", "Database design", "API integration"],
-  },
-  {
-    permissions: "drwxr-xr-x",
-    links: "3",
-    owner: "phantom",
-    size: "8.0K",
-    date: "Apr 04",
-    name: "custom-solutions/",
-    description: "Specialized development for unique requirements. If you can dream it, we can build it.",
-    features: ["API development", "Automation scripts", "Data processing", "Custom integrations"],
-  },
-  {
-    permissions: "-rwxr-xr-x",
-    links: "1",
-    owner: "phantom",
-    size: "2.1K",
-    date: "Apr 03",
-    name: "server-setup.sh",
-    description: "Complete Discord server setup with channels, roles, permissions, and bot configuration.",
-    features: ["Role hierarchy", "Channel organization", "Permission setup", "Bot integration"],
-  },
-  {
-    permissions: "-rw-r--r--",
-    links: "1",
-    owner: "phantom",
-    size: "1.5K",
-    date: "Apr 02",
-    name: "maintenance.cfg",
-    description: "Ongoing maintenance and support packages. Keep your projects running smoothly.",
-    features: ["Bug fixes", "Feature updates", "Performance monitoring", "Priority support"],
-  },
-];
+import { useLanguage } from "@/lib/language-context";
 
 export function ServicesDirectory() {
   const [expandedService, setExpandedService] = useState<string | null>(null);
+  const { t, dir } = useLanguage();
+
+  const services = [
+    {
+      id: "bots",
+      permissions: "drwxr-xr-x",
+      links: "5",
+      owner: "phantom",
+      size: "4.0K",
+      date: "Apr 05",
+      nameKey: "service.bots.name",
+      descKey: "service.bots.desc",
+      featureKeys: ["service.bots.f1", "service.bots.f2", "service.bots.f3", "service.bots.f4"],
+      isFolder: true,
+    },
+    {
+      id: "web",
+      permissions: "drwxr-xr-x",
+      links: "8",
+      owner: "phantom",
+      size: "12K",
+      date: "Apr 05",
+      nameKey: "service.web.name",
+      descKey: "service.web.desc",
+      featureKeys: ["service.web.f1", "service.web.f2", "service.web.f3", "service.web.f4"],
+      isFolder: true,
+    },
+    {
+      id: "custom",
+      permissions: "drwxr-xr-x",
+      links: "3",
+      owner: "phantom",
+      size: "8.0K",
+      date: "Apr 04",
+      nameKey: "service.custom.name",
+      descKey: "service.custom.desc",
+      featureKeys: ["service.custom.f1", "service.custom.f2", "service.custom.f3", "service.custom.f4"],
+      isFolder: true,
+    },
+    {
+      id: "setup",
+      permissions: "-rwxr-xr-x",
+      links: "1",
+      owner: "phantom",
+      size: "2.1K",
+      date: "Apr 03",
+      nameKey: "service.setup.name",
+      descKey: "service.setup.desc",
+      featureKeys: ["service.setup.f1", "service.setup.f2", "service.setup.f3", "service.setup.f4"],
+      isFolder: false,
+    },
+    {
+      id: "maint",
+      permissions: "-rw-r--r--",
+      links: "1",
+      owner: "phantom",
+      size: "1.5K",
+      date: "Apr 02",
+      nameKey: "service.maint.name",
+      descKey: "service.maint.desc",
+      featureKeys: ["service.maint.f1", "service.maint.f2", "service.maint.f3", "service.maint.f4"],
+      isFolder: false,
+    },
+  ];
 
   return (
-    <div className="min-h-screen py-20 px-6">
+    <div dir={dir} className="min-h-screen py-20 px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">
           <p className="text-primary text-sm mb-2">
-            phantom@services:~$ ls -la
+            {t("services.prompt")}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground glitch-hover inline-block cursor-blink">
-            SERVICE DIRECTORY
+            {t("services.title")}
           </h2>
         </div>
 
         {/* Directory Header */}
         <div className="border border-border bg-muted">
           <div className="px-4 py-2 text-xs text-muted-foreground border-b border-border hidden md:block">
-            total 27.6K
+            {t("services.total")}
           </div>
           <div className="px-4 py-2 grid grid-cols-12 gap-2 text-xs text-primary border-b border-border font-bold hidden md:grid">
-            <span className="col-span-2">PERMISSIONS</span>
-            <span className="col-span-1">LINKS</span>
-            <span className="col-span-2">OWNER</span>
-            <span className="col-span-1">SIZE</span>
-            <span className="col-span-2">MODIFIED</span>
-            <span className="col-span-4">NAME</span>
+            <span className="col-span-2">{t("services.permissions")}</span>
+            <span className="col-span-1">{t("services.links")}</span>
+            <span className="col-span-2">{t("services.owner")}</span>
+            <span className="col-span-1">{t("services.size")}</span>
+            <span className="col-span-2">{t("services.modified")}</span>
+            <span className="col-span-4">{t("services.name")}</span>
           </div>
 
           {/* Directory Entries */}
           {services.map((service) => (
             <div
-              key={service.name}
+              key={service.id}
               className="border-b border-border last:border-b-0"
             >
               {/* Main Row */}
               <button
                 onClick={() =>
                   setExpandedService(
-                    expandedService === service.name ? null : service.name
+                    expandedService === service.id ? null : service.id
                   )
                 }
-                className="w-full px-4 py-3 grid grid-cols-1 md:grid-cols-12 gap-2 text-sm hover:bg-primary/5 transition-colors text-left"
+                className="w-full px-4 py-3 grid grid-cols-1 md:grid-cols-12 gap-2 text-sm hover:bg-primary/5 transition-colors text-start"
               >
                 <span className="col-span-2 text-muted-foreground hidden md:block">
                   {service.permissions}
@@ -127,30 +128,26 @@ export function ServicesDirectory() {
                   {service.date}
                 </span>
                 <span className="col-span-4 text-primary font-bold flex items-center gap-2">
-                  {service.name.endsWith("/") ? (
-                    <FolderIcon />
-                  ) : (
-                    <FileIcon />
-                  )}
-                  {service.name}
-                  <span className="ml-auto text-muted-foreground text-xs">
-                    {expandedService === service.name ? "[-]" : "[+]"}
+                  {service.isFolder ? <FolderIcon /> : <FileIcon />}
+                  {t(service.nameKey)}
+                  <span className={`${dir === "rtl" ? "me-auto" : "ms-auto"} text-muted-foreground text-xs`}>
+                    {expandedService === service.id ? "[-]" : "[+]"}
                   </span>
                 </span>
               </button>
 
               {/* Expanded Details */}
-              {expandedService === service.name && (
-                <div className="px-4 pb-4 md:pl-20 bg-black/50 border-t border-border/50">
+              {expandedService === service.id && (
+                <div className={`px-4 pb-4 bg-black/50 border-t border-border/50 ${dir === "rtl" ? "md:pr-20" : "md:pl-20"}`}>
                   <div className="py-4">
-                    <p className="text-foreground mb-4">{service.description}</p>
+                    <p className="text-foreground mb-4">{t(service.descKey)}</p>
                     <div className="flex flex-wrap gap-2">
-                      {service.features.map((feature) => (
+                      {service.featureKeys.map((key) => (
                         <span
-                          key={feature}
+                          key={key}
                           className="px-2 py-1 text-xs border border-primary/50 text-primary bg-primary/5"
                         >
-                          {feature}
+                          {t(key)}
                         </span>
                       ))}
                     </div>
@@ -158,8 +155,8 @@ export function ServicesDirectory() {
                       href="#pricing"
                       className="inline-flex items-center mt-4 text-sm text-primary hover:underline"
                     >
-                      <span className="mr-2">&gt;</span>
-                      View pricing config
+                      <span className="me-2">{dir === "rtl" ? "<" : ">"}</span>
+                      {t("services.viewPricing")}
                     </a>
                   </div>
                 </div>
@@ -172,9 +169,9 @@ export function ServicesDirectory() {
         <div className="mt-6 text-muted-foreground text-sm">
           <span className="text-primary">phantom@services:~$</span> cat readme.txt
           <p className="mt-2 text-foreground">
-            All services include free consultation. Custom packages available upon request.
+            {t("services.readme")}
           </p>
-          <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />
+          <span className="inline-block w-2 h-4 bg-primary animate-pulse ms-1" />
         </div>
       </div>
     </div>

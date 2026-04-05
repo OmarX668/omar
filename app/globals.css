@@ -28,8 +28,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-mono);
-  --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+  --font-sans: var(--font-arabic), var(--font-mono);
+  --font-mono: 'JetBrains Mono', 'IBM Plex Sans Arabic', 'Geist Mono', monospace;
+  --font-arabic: 'IBM Plex Sans Arabic', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -231,3 +232,27 @@
   background: #00FF41;
   color: #000000;
 }
+
+/* RTL Support & Language Transition */
+[dir="rtl"] {
+  font-family: 'IBM Plex Sans Arabic', 'JetBrains Mono', monospace;
+}
+
+[dir="rtl"] .font-mono {
+  font-family: 'IBM Plex Sans Arabic', 'JetBrains Mono', monospace;
+}
+
+/* Smooth language transition */
+main, nav, section, footer {
+  transition: all 0.3s ease;
+}
+
+/* RTL-aware margins */
+.ms-1 { margin-inline-start: 0.25rem; }
+.ms-2 { margin-inline-start: 0.5rem; }
+.ms-4 { margin-inline-start: 1rem; }
+.me-1 { margin-inline-end: 0.25rem; }
+.me-2 { margin-inline-end: 0.5rem; }
+.me-4 { margin-inline-end: 1rem; }
+.ps-4 { padding-inline-start: 1rem; }
+.pe-4 { padding-inline-end: 1rem; }
