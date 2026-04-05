@@ -147,22 +147,25 @@ function BootSequence() {
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center p-6">
       <div className="max-w-2xl w-full">
         <div className="font-mono text-sm md:text-base">
-          {lines.map((line, i) => (
-            <div
-              key={i}
-              className={`${
-                line.includes("[OK]")
-                  ? "text-primary"
-                  : line.includes("ACCESS GRANTED") || line.includes("WELCOME")
-                  ? "text-primary glow-green-text"
-                  : line.includes("█") || line.includes("╔") || line.includes("║") || line.includes("╚")
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              } ${line.includes("ACCESS") ? "text-lg md:text-xl mt-2" : ""}`}
-            >
-              {line || "\u00A0"}
-            </div>
-          ))}
+          {lines.map((line, i) => {
+            const text = line ?? "";
+            return (
+              <div
+                key={i}
+                className={`${
+                  text.includes("[OK]")
+                    ? "text-primary"
+                    : text.includes("ACCESS GRANTED") || text.includes("WELCOME")
+                    ? "text-primary glow-green-text"
+                    : text.includes("█") || text.includes("╔") || text.includes("║") || text.includes("╚")
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                } ${text.includes("ACCESS") ? "text-lg md:text-xl mt-2" : ""}`}
+              >
+                {text || "\u00A0"}
+              </div>
+            );
+          })}
           <span className="inline-block w-3 h-5 bg-primary animate-pulse ml-1" />
         </div>
       </div>
